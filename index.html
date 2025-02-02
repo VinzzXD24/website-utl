@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat AI Netcyzen</title>
+  <!-- Memuat Font Awesome dari CDN Cloudflare untuk ikon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-d3xS/zy1Gyo8lqpyfG5IuP/2lO9S+8szoE6mKfzWCEajmfvoh5dv9O5DScV/Tc7qSEt8g6ajFZj/l2x7F53YBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+    #chat-container {
+      width: 80%;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    #chat-box {
+      height: 300px;
+      overflow-y: scroll;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+    #input-container {
+      display: flex;
+      justify-content: space-between;
+    }
+    #input-box {
+      width: 80%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+    #send-btn {
+      width: 15%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #send-btn:hover {
+      background-color: #45a049;
+    }
+    .message {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: #f1f1f1;
+      max-width: 80%;
+      display: flex;
+      align-items: center;
+    }
+    .user-message {
+      background-color: #d0f4d4;
+      margin-left: auto;
+    }
+    .ai-message {
+      background-color: #e0e0e0;
+    }
+    .spinner {
+      margin-right: 8px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="chat-container">
+    <div id="chat-box"></div>
+    <div id="input-container">
+      <input type="text" id="input-box" placeholder="Tulis pesan Anda..." />
+      <button id="send-btn">Kirim</button>
+    </div>
+  </div>
+
+  <script>
+    const sendButton = document.getElementById('send-btn');
+    const inputBox = document.getElementById('input-box');
+    const chatBox = document.getElementById('chat-box');
+
+    // Prompt tetap untuk AI
+    const prompt = "Perkenalan Nama Saya Netcyzen AI Yang Sangat Ramah Dan Membantu Pasti Nya Siap Menerima Semua Pertanyaan Dari Kamu Tetapi Yang Positif Tidak Negatif Kamu Berjenis Kelamin Perempuan";
+
+    // Fungsi untuk menambahkan pesan ke chat
+    function appendMessage(text, sender) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message');
+      if (sender === 'user') {
+        messageDiv.classList.add('user-message');
+      } else {
+        messageDiv.classList.add('ai-message');
+      }
+      messageDiv.innerHTML = text;
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      return messageDiv;
+    }
+
+    sendButton.addEventListener('click', async () => {
+      const userText = inputBox.value.trim();
+      if (userText) {
+        // Tampilkan pesan pengguna
+        appendMessage(userText, 'user');
+        inputBox.value = '';
+
+        // Tampilkan pesan loading dengan ikon spinner
+        const loadingMessage = appendMessage('<i class="fas fa-spinner spinner"></i> Menunggu respon...', 'ai');
+
+        // URL API dengan parameter yang di-encode
+        const apiUrl = `https://restapi.apibotwa.biz.id/api/gptlogic?message=${encodeURIComponent(userText)}&prompt=${encodeURIComponent(prompt)}`;
+
+        try {
+          const response = await fetch(apiUrl);
+          const data = await response.json();
+
+          // Delay 1.5 detik sebelum menampilkan respon
+          setTimeout(() => {
+            // Hapus pesan loading
+            chatBox.removeChild(loadingMessage);
+            
+            if (data.status === 200 && data.data.response) {
+              appendMessage(data.data.response, 'ai');
+            } else {
+              appendMessage("Maaf, saya tidak dapat memahami pesan Anda.", 'ai');
+            }
+          }, 1500);
+        } catch (error) {
+          console.error('Error fetching from API:', error);
+          // Delay 1.5 detik sebelum menampilkan error
+          setTimeout(() => {
+            chatBox.removeChild(loadingMessage);
+            appendMessage("Terjadi kesalahan, coba lagi nanti.", 'ai');
+          }, 1500);
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
