@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +9,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
   <style>
-    /* Variabel CSS */
     :root {
       --primary: #ffffff;
       --secondary: #f8f8f8;
@@ -22,22 +21,19 @@
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       --font-mono: 'SF Mono', SFMono-Regular, ui-monospace, Monaco, monospace;
     }
-
-    /* Reset & Base Styles */
+    /* Reset & Base */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
     }
-
     body {
       background: var(--primary);
       color: var(--text);
       line-height: 1.6;
       font-size: 15px;
     }
-
     /* Scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
@@ -50,8 +46,7 @@
       background: var(--text-light);
       border-radius: 3px;
     }
-
-    /* Header: Fixed agar selalu terlihat */
+    /* Header Fixed */
     .header {
       position: fixed;
       top: 0;
@@ -63,7 +58,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 10;
+      z-index: 1000;
       padding: 0 1rem;
     }
     .header .header-icon {
@@ -75,14 +70,14 @@
     }
     .header h1 {
       font-size: 1.5rem;
-      text-align: center;
-      /* Pastikan ruang cukup agar teks tidak tertimpa */
-      margin: 0 auto;
       white-space: nowrap;
       overflow: hidden;
+      text-align: center;
+      width: 100%;
+      /* Pastikan elemen header lain (seperti icon) tidak mengganggu tampilan */
+      padding: 0 2rem;
     }
-
-    /* Konten utama dimulai setelah header */
+    /* Main Container, beri margin-top sesuai tinggi header */
     .main-container {
       max-width: var(--max-width);
       margin: calc(var(--header-height) + 1rem) auto 0;
@@ -91,18 +86,15 @@
       display: flex;
       flex-direction: column;
     }
-
     .messages-container {
       flex: 1;
       padding: 1.5rem 0;
       overflow-y: auto;
     }
-    
     .message-row {
       margin-bottom: 1.5rem;
       animation: fadeIn 0.3s ease-out forwards;
     }
-
     .message-content {
       display: inline-block;
       max-width: 100%;
@@ -113,7 +105,7 @@
       box-shadow: 0 2px 8px var(--shadow);
       transition: var(--transition);
     }
-    /* Pesan AI menggunakan background berbeda */
+    /* Pesan AI dengan background berbeda */
     .message-row.ai .message-content {
       background: var(--secondary);
     }
@@ -121,8 +113,7 @@
       font-size: 15px;
       line-height: 1.8;
     }
-
-    /* Area Input */
+    /* Input Area */
     .input-container {
       padding: 1rem;
       border-top: 1px solid var(--border);
@@ -165,13 +156,10 @@
       transform: translateY(-1px);
       box-shadow: 0 2px 8px var(--shadow);
     }
-
-    /* Animasi */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     /* Responsive */
     @media (max-width: 768px) {
       .main-container {
@@ -185,7 +173,6 @@
         gap: 0.5rem;
       }
     }
-
     /* Dark Mode */
     @media (prefers-color-scheme: dark) {
       :root {
@@ -203,7 +190,7 @@
   <!-- Header Fixed -->
   <div class="header">
     <div class="header-icon"><i class="fas fa-robot"></i></div>
-    <!-- Tempat teks yang dianimasikan (Typed.js) -->
+    <!-- Tempat teks yang dianimasikan oleh Typed.js -->
     <h1 id="header-title"></h1>
   </div>
 
@@ -221,7 +208,7 @@
   </div>
 
   <script>
-    // Inisialisasi Typed.js pada header
+    // Inisialisasi Typed.js untuk header
     document.addEventListener("DOMContentLoaded", function() {
       new Typed("#header-title", {
         strings: ["Chat AI", "Selamat Datang di Chat AI"],
@@ -243,7 +230,7 @@
       const userMessage = inputBox.value.trim();
       if (!userMessage) return;
 
-      // Tampilkan pesan user
+      // Tampilkan pesan pengguna
       displayMessage(userMessage, 'user');
       inputBox.value = '';
 
@@ -258,9 +245,10 @@
       try {
         const response = await fetch(url);
         const data = await response.json();
-        if (data.status === 200) {
+        if (data.status === 200 && data.data && data.data.response) {
           return data.data.response;
         } else {
+          console.error("Respons API tidak sesuai:", data);
           return "Maaf, terjadi kesalahan dalam respons.";
         }
       } catch (error) {
@@ -269,7 +257,7 @@
       }
     }
 
-    // Fungsi untuk menampilkan pesan di layar
+    // Fungsi untuk menampilkan pesan
     function displayMessage(message, sender) {
       const messageRow = document.createElement('div');
       messageRow.classList.add('message-row', sender);
@@ -280,11 +268,10 @@
 
       messageRow.appendChild(messageContent);
       messagesContainer.appendChild(messageRow);
-      // Scroll ke bagian bawah
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
-    // Opsional: kirim pesan dengan tombol Enter (tanpa line break)
+    // Kirim pesan dengan Enter (tanpa shift)
     inputBox.addEventListener("keydown", function(e) {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
