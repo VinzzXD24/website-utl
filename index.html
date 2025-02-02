@@ -9,12 +9,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
   <style>
     :root {
-      --primary: #ffffff;
-      --secondary: #f8f8f8;
-      --text: #2c2c2c;
-      --text-light: #666666;
-      --border: #e5e5e5;
-      --shadow: rgba(0, 0, 0, 0.05);
+      --primary: #1c1c1c;
+      --secondary: #2c2c2c;
+      --text: #e5e5e5;
+      --text-light: #999999;
+      --border: #333333;
+      --shadow: rgba(0, 0, 0, 0.1);
       --max-width: 900px;
       --sidebar-width: 300px;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -44,7 +44,7 @@
     .header {
       padding: 1.5rem;
       border-bottom: 1px solid var(--border);
-      background: var(--primary);
+      background: var(--secondary);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -67,12 +67,12 @@
       padding: 1.5rem;
       border: 1px solid var(--border);
       border-radius: 12px;
-      background: var(--primary);
+      background: var(--secondary);
       box-shadow: 0 2px 8px var(--shadow);
     }
 
     .message-row.ai .message-content {
-      background: var(--secondary);
+      background: var(--primary);
     }
 
     .button {
@@ -95,7 +95,7 @@
     .input-container {
       padding: 1.5rem;
       border-top: 1px solid var(--border);
-      background: var(--primary);
+      background: var(--secondary);
     }
 
     .input-wrapper {
@@ -111,6 +111,23 @@
       font-size: 15px;
     }
 
+    .new-chat-button {
+      padding: 0.75rem 1.25rem;
+      background: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .new-chat-button:hover {
+      background: var(--secondary);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -121,6 +138,7 @@
   <div class="main-container">
     <div class="header">
       <h1>Netcyzen AI Chat</h1>
+      <button class="new-chat-button" id="new-chat-button">New Chat</button>
     </div>
 
     <div class="messages-container" id="messages-container">
@@ -139,6 +157,7 @@
     const sendButton = document.getElementById('send-button');
     const inputBox = document.getElementById('input-box');
     const messagesContainer = document.getElementById('messages-container');
+    const newChatButton = document.getElementById('new-chat-button');
 
     const prompt = "Perkenalan Nama Gua Netcyzen AI Yang Gaul 😎";
 
@@ -176,6 +195,20 @@
       }
     }
 
+    // Fungsi untuk menyimpan chat ke localStorage
+    function saveChatToLocalStorage() {
+      const messages = messagesContainer.innerHTML;
+      localStorage.setItem('chatMessages', messages);
+    }
+
+    // Fungsi untuk memuat chat dari localStorage
+    function loadChatFromLocalStorage() {
+      const savedMessages = localStorage.getItem('chatMessages');
+      if (savedMessages) {
+        messagesContainer.innerHTML = savedMessages;
+      }
+    }
+
     // Ketika tombol Kirim diklik
     sendButton.addEventListener('click', async () => {
       const userMessage = inputBox.value;
@@ -186,6 +219,7 @@
         // Mendapatkan respons dari AI
         const aiResponse = await getAIResponse(userMessage);
         displayMessage(aiResponse, "ai"); // Menampilkan pesan dari AI
+        saveChatToLocalStorage(); // Simpan chat ke localStorage
       }
     });
 
@@ -196,6 +230,15 @@
         sendButton.click();
       }
     });
+
+    // Tombol "New Chat" untuk menghapus pesan
+    newChatButton.addEventListener('click', () => {
+      localStorage.removeItem('chatMessages');
+      messagesContainer.innerHTML = ''; // Menghapus chat
+    });
+
+    // Memuat chat dari localStorage saat halaman dimuat
+    window.addEventListener('load', loadChatFromLocalStorage);
   </script>
 </body>
 </html>
