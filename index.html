@@ -82,13 +82,14 @@
       flex: 1;
       padding: 1rem;
       overflow-y: auto;
+      display: flex;
+      flex-direction: column;
     }
 
     .message {
       margin-bottom: 1rem;
       padding: 1rem;
       border-radius: 8px;
-      background: var(--secondary);
       max-width: 80%;
       box-shadow: 0 2px 8px var(--shadow);
     }
@@ -96,6 +97,13 @@
     .message.user {
       background: var(--input-bg);
       align-self: flex-end;
+      text-align: right;
+    }
+
+    .message.ai {
+      background: var(--secondary);
+      align-self: flex-start;
+      text-align: left;
     }
 
     .chat-input {
@@ -147,7 +155,6 @@
     const sendBtn = document.getElementById("sendBtn");
     const newChatBtn = document.getElementById("newChat");
 
-    // Load messages from local storage
     function loadChat() {
       const chatData = localStorage.getItem("chatHistory");
       if (chatData) {
@@ -155,23 +162,19 @@
       }
     }
 
-    // Save chat to local storage
     function saveChat() {
       localStorage.setItem("chatHistory", chatMessages.innerHTML);
     }
 
-    // Append message
     function appendMessage(sender, text) {
       const messageDiv = document.createElement("div");
-      messageDiv.classList.add("message");
-      if (sender === "user") messageDiv.classList.add("user");
+      messageDiv.classList.add("message", sender);
       messageDiv.textContent = text;
       chatMessages.appendChild(messageDiv);
       chatMessages.scrollTop = chatMessages.scrollHeight;
       saveChat();
     }
 
-    // Send message
     sendBtn.addEventListener("click", () => {
       const message = userInput.value.trim();
       if (!message) return;
@@ -181,7 +184,6 @@
       fetchAIResponse(message);
     });
 
-    // Enter key to send message
     userInput.addEventListener("keypress", (e) => {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
@@ -189,7 +191,6 @@
       }
     });
 
-    // Fetch AI response
     async function fetchAIResponse(message) {
       try {
         const response = await fetch(`https://restapi.apibotwa.biz.id/api/gptlogic?message=${encodeURIComponent(message)}&prompt=Perkenalan Nama Gua Netcyzen AI Yang Gaul 😎`);
@@ -204,7 +205,6 @@
       }
     }
 
-    // New chat function
     newChatBtn.addEventListener("click", () => {
       chatMessages.innerHTML = "";
       localStorage.removeItem("chatHistory");
