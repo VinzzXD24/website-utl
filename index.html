@@ -13,6 +13,7 @@
             --border: #333333;
             --shadow: rgba(0, 0, 0, 0.2);
             --input-bg: #2e2e2e;
+            --button-hover: #3a3a3a;
             --max-width: 900px;
         }
 
@@ -33,20 +34,40 @@
             height: 100vh;
             text-align: center;
             padding: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
         }
 
         .container {
             background: var(--secondary);
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 12px;
             box-shadow: 0 4px 16px var(--shadow);
             max-width: var(--max-width);
             width: 100%;
+            animation: fadeIn 1.2s ease-in-out;
         }
 
         h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 12px;
         }
 
         p {
@@ -57,29 +78,45 @@
 
         .button {
             display: inline-block;
-            padding: 12px 24px;
+            padding: 14px 26px;
             background: var(--input-bg);
             color: var(--text);
             border-radius: 8px;
             text-decoration: none;
             font-size: 16px;
             transition: 0.3s;
-            margin: 10px 0;
-            width: 200px;
+            margin: 10px 5px;
+            width: 220px;
+            font-weight: 500;
+            border: 2px solid transparent;
         }
 
         .button:hover {
-            background: var(--border);
+            background: var(--button-hover);
+            border-color: var(--border);
         }
 
         .info {
             margin-top: 30px;
             text-align: center;
             max-width: var(--max-width);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 13px;
+            color: var(--text-light);
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
+    <div class="header">
+        <img src="https://via.placeholder.com/40" alt="Logo" class="logo">
+        <h2>NetCyzen AI</h2>
+    </div>
+
     <div class="container">
         <h1>Selamat Datang di NetCyzen AI Chat</h1>
         <p>Chat dengan AI canggih kami dengan tampilan yang simpel dan modern.</p>
@@ -91,6 +128,10 @@
         <h2>Tentang NetCyzen AI</h2>
         <p>NetCyzen AI adalah platform chat berbasis kecerdasan buatan yang membantu Anda dalam berbagai percakapan interaktif.</p>
         <p>Teknologi canggih kami memberikan pengalaman chatting yang responsif dan intuitif.</p>
+    </div>
+
+    <div class="footer">
+        © 2025 NetCyzen Software. All Rights Reserved.
     </div>
 </body>
 </html>
