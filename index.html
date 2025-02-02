@@ -3,29 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat AI</title>
+  <title>Netcyzen AI Chat</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
   <style>
     :root {
-      --primary: #1c1c1c;
-      --secondary: #2c2c2c;
+      --primary: #1e1e1e;
+      --secondary: #252525;
       --text: #e5e5e5;
       --text-light: #999999;
       --border: #333333;
-      --shadow: rgba(0, 0, 0, 0.1);
+      --shadow: rgba(0, 0, 0, 0.2);
+      --input-bg: #2e2e2e;
       --max-width: 900px;
-      --sidebar-width: 300px;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      --font-mono: 'SF Mono', SFMono-Regular, ui-monospace, Monaco, monospace;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-family: 'Inter', sans-serif;
     }
 
     body {
@@ -33,212 +31,187 @@
       color: var(--text);
       line-height: 1.6;
       font-size: 15px;
-    }
-
-    .main-container {
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
-    }
-
-    .header {
-      padding: 1.5rem;
-      border-bottom: 1px solid var(--border);
-      background: var(--secondary);
-      display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
 
-    .messages-container {
+    .chat-container {
+      width: 100%;
+      max-width: var(--max-width);
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px var(--shadow);
+    }
+
+    .chat-header {
+      background: var(--secondary);
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .chat-header h1 {
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .chat-header i {
+      color: #00ff99;
+    }
+
+    .chat-header button {
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .chat-messages {
       flex: 1;
-      padding: 1.5rem;
+      padding: 1rem;
       overflow-y: auto;
     }
 
-    .message-row {
-      margin-bottom: 1.5rem;
-      animation: fadeIn 0.3s ease-out forwards;
-    }
-
-    .message-content {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 1.5rem;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--secondary);
-      box-shadow: 0 2px 8px var(--shadow);
-    }
-
-    .message-row.ai .message-content {
-      background: var(--primary);
-    }
-
-    .button {
-      padding: 0.75rem 1.25rem;
-      background: var(--primary);
-      border: 1px solid var(--border);
+    .message {
+      margin-bottom: 1rem;
+      padding: 1rem;
       border-radius: 8px;
-      color: var(--text);
-      font-weight: 500;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .button:hover {
       background: var(--secondary);
-      transform: translateY(-1px);
+      max-width: 80%;
       box-shadow: 0 2px 8px var(--shadow);
     }
 
-    .input-container {
-      padding: 1.5rem;
-      border-top: 1px solid var(--border);
-      background: var(--secondary);
+    .message.user {
+      background: var(--input-bg);
+      align-self: flex-end;
     }
 
-    .input-wrapper {
+    .chat-input {
       display: flex;
-      gap: 1rem;
+      padding: 1rem;
+      background: var(--secondary);
+      border-top: 1px solid var(--border);
     }
 
-    .input-box {
+    .chat-input textarea {
       flex: 1;
       padding: 1rem;
       border: 1px solid var(--border);
       border-radius: 8px;
-      font-size: 15px;
+      background: var(--input-bg);
+      color: var(--text);
+      resize: none;
+      height: 50px;
     }
 
-    .new-chat-button {
-      padding: 0.75rem 1.25rem;
-      background: var(--primary);
+    .chat-input button {
+      margin-left: 1rem;
+      padding: 0.75rem 1rem;
+      background: var(--input-bg);
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--text);
-      font-weight: 500;
       cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .new-chat-button:hover {
-      background: var(--secondary);
-      transform: translateY(-1px);
-      box-shadow: 0 2px 8px var(--shadow);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <div class="main-container">
-    <div class="header">
-      <h1>Netcyzen AI Chat</h1>
-      <button class="new-chat-button" id="new-chat-button">New Chat</button>
-    </div>
 
-    <div class="messages-container" id="messages-container">
-      <!-- Messages will appear here -->
+  <div class="chat-container">
+    <div class="chat-header">
+      <h1><i class="fa-solid fa-robot"></i> Netcyzen AI</h1>
+      <button id="newChat"><i class="fa-solid fa-plus"></i> New Chat</button>
     </div>
-
-    <div class="input-container">
-      <div class="input-wrapper">
-        <textarea id="input-box" class="input-box" placeholder="Tulis pesan..." rows="2"></textarea>
-        <button class="button" id="send-button">Kirim</button>
-      </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input">
+      <textarea id="userInput" placeholder="Tulis pesan..."></textarea>
+      <button id="sendBtn"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
   </div>
 
   <script>
-    const sendButton = document.getElementById('send-button');
-    const inputBox = document.getElementById('input-box');
-    const messagesContainer = document.getElementById('messages-container');
-    const newChatButton = document.getElementById('new-chat-button');
+    const chatMessages = document.getElementById("chatMessages");
+    const userInput = document.getElementById("userInput");
+    const sendBtn = document.getElementById("sendBtn");
+    const newChatBtn = document.getElementById("newChat");
 
-    const prompt = "Perkenalan Nama Gua Netcyzen AI Yang Gaul 😎";
-
-    // Fungsi untuk menampilkan pesan di UI
-    function displayMessage(message, sender = "user") {
-      const messageRow = document.createElement('div');
-      messageRow.classList.add('message-row');
-      messageRow.classList.add(sender);
-
-      const messageContent = document.createElement('div');
-      messageContent.classList.add('message-content');
-      messageContent.textContent = message;
-
-      messageRow.appendChild(messageContent);
-      messagesContainer.appendChild(messageRow);
-
-      messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll ke bawah
+    // Load messages from local storage
+    function loadChat() {
+      const chatData = localStorage.getItem("chatHistory");
+      if (chatData) {
+        chatMessages.innerHTML = chatData;
+      }
     }
 
-    // Fungsi untuk memanggil API
-    async function getAIResponse(userMessage) {
-      const url = `https://restapi.apibotwa.biz.id/api/gptlogic?message=${encodeURIComponent(userMessage)}&prompt=${encodeURIComponent(prompt)}`;
+    // Save chat to local storage
+    function saveChat() {
+      localStorage.setItem("chatHistory", chatMessages.innerHTML);
+    }
+
+    // Append message
+    function appendMessage(sender, text) {
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("message");
+      if (sender === "user") messageDiv.classList.add("user");
+      messageDiv.textContent = text;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      saveChat();
+    }
+
+    // Send message
+    sendBtn.addEventListener("click", () => {
+      const message = userInput.value.trim();
+      if (!message) return;
+
+      appendMessage("user", message);
+      userInput.value = "";
+      fetchAIResponse(message);
+    });
+
+    // Enter key to send message
+    userInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendBtn.click();
+      }
+    });
+
+    // Fetch AI response
+    async function fetchAIResponse(message) {
       try {
-        const response = await fetch(url, { mode: 'cors' });
+        const response = await fetch(`https://restapi.apibotwa.biz.id/api/gptlogic?message=${encodeURIComponent(message)}&prompt=Perkenalan Nama Gua Netcyzen AI Yang Gaul 😎`);
         const data = await response.json();
-        if (data.status === 200 && data.data && data.data.response) {
-          return data.data.response; // Mengambil data dari response sesuai format baru
+        if (data.status === 200) {
+          appendMessage("ai", data.data.response);
         } else {
-          console.error("Respons API tidak sesuai:", data);
-          return "Maaf, terjadi kesalahan dalam respons.";
+          appendMessage("ai", "Maaf, terjadi kesalahan.");
         }
       } catch (error) {
-        console.error("Error fetching API:", error);
-        return "Terjadi error pada server.";
+        appendMessage("ai", "Gagal terhubung ke AI.");
       }
     }
 
-    // Fungsi untuk menyimpan chat ke localStorage
-    function saveChatToLocalStorage() {
-      const messages = messagesContainer.innerHTML;
-      localStorage.setItem('chatMessages', messages);
-    }
-
-    // Fungsi untuk memuat chat dari localStorage
-    function loadChatFromLocalStorage() {
-      const savedMessages = localStorage.getItem('chatMessages');
-      if (savedMessages) {
-        messagesContainer.innerHTML = savedMessages;
-      }
-    }
-
-    // Ketika tombol Kirim diklik
-    sendButton.addEventListener('click', async () => {
-      const userMessage = inputBox.value;
-      if (userMessage.trim() !== '') {
-        displayMessage(userMessage, "user"); // Menampilkan pesan dari user
-        inputBox.value = ''; // Kosongkan input box
-
-        // Mendapatkan respons dari AI
-        const aiResponse = await getAIResponse(userMessage);
-        displayMessage(aiResponse, "ai"); // Menampilkan pesan dari AI
-        saveChatToLocalStorage(); // Simpan chat ke localStorage
-      }
+    // New chat function
+    newChatBtn.addEventListener("click", () => {
+      chatMessages.innerHTML = "";
+      localStorage.removeItem("chatHistory");
     });
 
-    // Agar bisa mengirim dengan Enter
-    inputBox.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        sendButton.click();
-      }
-    });
-
-    // Tombol "New Chat" untuk menghapus pesan
-    newChatButton.addEventListener('click', () => {
-      localStorage.removeItem('chatMessages');
-      messagesContainer.innerHTML = ''; // Menghapus chat
-    });
-
-    // Memuat chat dari localStorage saat halaman dimuat
-    window.addEventListener('load', loadChatFromLocalStorage);
+    loadChat();
   </script>
+
 </body>
 </html>
