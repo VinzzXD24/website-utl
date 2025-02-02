@@ -4,7 +4,164 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat AI</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary: #ffffff;
+            --secondary: #f8f8f8;
+            --text: #2c2c2c;
+            --text-light: #666666;
+            --border: #e5e5e5;
+            --shadow: rgba(0, 0, 0, 0.05);
+            --max-width: 900px;
+            --sidebar-width: 300px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-mono: 'SF Mono', SFMono-Regular, ui-monospace, Monaco, monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: 3px;
+        }
+
+        .main-container {
+            margin-left: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .messages-container {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .message-row {
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .message-content {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--primary);
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: var(--transition);
+        }
+
+        .message-row.ai .message-content {
+            background: var(--secondary);
+        }
+
+        .message-text {
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .input-container {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            background: var(--primary);
+        }
+
+        .input-wrapper {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .input-box {
+            flex: 1;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            resize: none;
+            transition: var(--transition);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .input-box:focus {
+            outline: none;
+            border-color: var(--text);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .button {
+            padding: 0.75rem 1.25rem;
+            background: var(--primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .button:hover {
+            background: var(--secondary);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin-left: 0;
+            }
+
+            .message-content {
+                margin: 0.5rem;
+            }
+
+            .input-wrapper {
+                padding: 0 0.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="main-container">
@@ -43,7 +200,12 @@
             const url = `https://restapi.apibotwa.biz.id/api/gptlogic?message=${encodeURIComponent(userMessage)}&prompt=${encodeURIComponent(prompt)}`;
             const response = await fetch(url);
             const data = await response.json();
-            return data.reply;  // Assuming the API returns the message under 'reply' key
+            
+            if (data.status === 200) {
+                return data.data.response;  // Mengambil response dari data yang diterima
+            } else {
+                return "Maaf, terjadi kesalahan dalam merespons.";
+            }
         }
 
         function displayMessage(message, sender) {
