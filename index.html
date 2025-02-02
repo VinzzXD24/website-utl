@@ -1,225 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat AI</title>
-    <style>
-        :root {
-            --primary: #ffffff;
-            --secondary: #f8f8f8;
-            --text: #2c2c2c;
-            --text-light: #666666;
-            --border: #e5e5e5;
-            --shadow: rgba(0, 0, 0, 0.05);
-            --max-width: 900px;
-            --sidebar-width: 300px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --font-mono: 'SF Mono', SFMono-Regular, ui-monospace, Monaco, monospace;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat AI</title>
+  <!-- Library tambahan -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+  <style>
+    :root {
+      --primary: #ffffff;
+      --secondary: #f8f8f8;
+      --text: #2c2c2c;
+      --text-light: #666666;
+      --border: #e5e5e5;
+      --shadow: rgba(0, 0, 0, 0.05);
+      --max-width: 900px;
+      --sidebar-width: 300px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --font-mono: 'SF Mono', SFMono-Regular, ui-monospace, Monaco, monospace;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-        }
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    }
 
-        body {
-            background: var(--primary);
-            color: var(--text);
-            line-height: 1.6;
-            font-size: 15px;
-        }
+    body {
+      background: var(--primary);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 15px;
+    }
 
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
 
-        ::-webkit-scrollbar-track {
-            background: var(--secondary);
-        }
+    ::-webkit-scrollbar-track {
+      background: var(--secondary);
+    }
 
-        ::-webkit-scrollbar-thumb {
-            background: var(--text-light);
-            border-radius: 3px;
-        }
+    ::-webkit-scrollbar-thumb {
+      background: var(--text-light);
+      border-radius: 3px;
+    }
 
-        .main-container {
-            margin-left: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    /* Header */
+    .header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
 
-        .header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            background: var(--primary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .header h1 {
+      font-size: 1.5rem;
+      text-align: center;
+      margin: 0;
+    }
 
-        .messages-container {
-            flex: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-        }
+    /* Jika ingin menambahkan icon atau tombol di header, gunakan posisi absolute */
+    .header .header-icon {
+      position: absolute;
+      left: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
 
-        .message-row {
-            margin-bottom: 1.5rem;
-            animation: fadeIn 0.3s ease-out forwards;
-        }
+    /* Main Container & Messages */
+    .main-container {
+      margin: 0 auto;
+      max-width: var(--max-width);
+      min-height: calc(100vh - 75px); /* dikurangi tinggi header */
+      display: flex;
+      flex-direction: column;
+    }
 
-        .message-content {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 1.5rem;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: var(--primary);
-            box-shadow: 0 2px 8px var(--shadow);
-            transition: var(--transition);
-        }
+    .messages-container {
+      flex: 1;
+      padding: 1.5rem;
+      overflow-y: auto;
+    }
 
-        .message-row.ai .message-content {
-            background: var(--secondary);
-        }
+    .message-row {
+      margin-bottom: 1.5rem;
+      animation: fadeIn 0.3s ease-out forwards;
+    }
 
-        .message-text {
-            font-size: 15px;
-            line-height: 1.8;
-        }
+    .message-content {
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--primary);
+      box-shadow: 0 2px 8px var(--shadow);
+      transition: var(--transition);
+    }
 
-        .input-container {
-            padding: 1.5rem;
-            border-top: 1px solid var(--border);
-            background: var(--primary);
-        }
+    .message-row.ai .message-content {
+      background: var(--secondary);
+    }
 
-        .input-wrapper {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            display: flex;
-            gap: 1rem;
-        }
+    .message-text {
+      font-size: 15px;
+      line-height: 1.8;
+    }
 
-        .input-box {
-            flex: 1;
-            padding: 1rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 15px;
-            resize: none;
-            transition: var(--transition);
-            box-shadow: 0 2px 8px var(--shadow);
-        }
+    /* Input Area */
+    .input-container {
+      padding: 1.5rem;
+      border-top: 1px solid var(--border);
+      background: var(--primary);
+    }
 
-        .input-box:focus {
-            outline: none;
-            border-color: var(--text);
-            box-shadow: 0 4px 12px var(--shadow);
-        }
+    .input-wrapper {
+      width: 100%;
+      display: flex;
+      gap: 1rem;
+    }
 
-        .button {
-            padding: 0.75rem 1.25rem;
-            background: var(--primary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+    .input-box {
+      flex: 1;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 15px;
+      resize: none;
+      transition: var(--transition);
+      box-shadow: 0 2px 8px var(--shadow);
+    }
 
-        .button:hover {
-            background: var(--secondary);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px var(--shadow);
-        }
+    .input-box:focus {
+      outline: none;
+      border-color: var(--text);
+      box-shadow: 0 4px 12px var(--shadow);
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    /* Button Styles */
+    .button {
+      padding: 0.75rem 1.25rem;
+      background: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
-        @media (max-width: 768px) {
-            .main-container {
-                margin-left: 0;
-            }
+    .button:hover {
+      background: var(--secondary);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px var(--shadow);
+    }
 
-            .message-content {
-                margin: 0.5rem;
-            }
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-            .input-wrapper {
-                padding: 0 0.5rem;
-            }
-        }
-    </style>
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .main-container {
+        max-width: 100%;
+      }
+
+      .message-content {
+        margin: 0.5rem;
+      }
+
+      .input-wrapper {
+        padding: 0 0.5rem;
+      }
+    }
+
+    /* Dark Mode */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --primary: #1a1a1a;
+        --secondary: #252525;
+        --text: #e5e5e5;
+        --text-light: #999999;
+        --border: #333333;
+        --shadow: rgba(0, 0, 0, 0.2);
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="header">
-            <h1>Chat AI</h1>
-        </div>
-        <div class="messages-container" id="messages-container">
-            <!-- Messages will be shown here -->
-        </div>
-        <div class="input-container">
-            <div class="input-wrapper">
-                <textarea id="input-box" class="input-box" placeholder="Type a message..." rows="2"></textarea>
-                <button class="button" id="send-btn">Send</button>
-            </div>
-        </div>
+  <!-- Header dengan opsi icon (jika diperlukan) -->
+  <div class="header">
+    <!-- Contoh icon di header -->
+    <div class="header-icon">
+      <i class="fas fa-robot"></i>
     </div>
+    <h1>Chat AI</h1>
+  </div>
 
-    <script>
-        const inputBox = document.getElementById('input-box');
-        const sendBtn = document.getElementById('send-btn');
-        const messagesContainer = document.getElementById('messages-container');
-        const prompt = "Perkenalan Nama Gua Netcyzen AI Yang Gaul 😎";
+  <div class="main-container">
+    <div class="messages-container" id="messages-container">
+      <!-- Pesan akan muncul di sini -->
+    </div>
+    <div class="input-container">
+      <div class="input-wrapper">
+        <textarea id="input-box" class="input-box" placeholder="Ketik pesan..." rows="2"></textarea>
+        <button class="button" id="send-btn">Kirim</button>
+      </div>
+    </div>
+  </div>
 
-        sendBtn.addEventListener('click', async () => {
-            const userMessage = inputBox.value.trim();
-            if (userMessage) {
-                displayMessage(userMessage, 'user');
-                inputBox.value = ''; // Clear the input box
-                
-                const responseMessage = await getAIResponse(userMessage);
-                displayMessage(responseMessage, 'ai');
-            }
-        });
+  <script>
+    const inputBox = document.getElementById('input-box');
+    const sendBtn = document.getElementById('send-btn');
+    const messagesContainer = document.getElementById('messages-container');
+    const prompt = "Perkenalan Nama Gua Netcyzen AI Yang Gaul 😎";
 
-        async function getAIResponse(userMessage) {
-            const url = `https://restapi.apibotwa.biz.id/api/gptlogic?message=${encodeURIComponent(userMessage)}&prompt=${encodeURIComponent(prompt)}`;
-            const response = await fetch(url);
-            const data = await response.json();
-            
-            if (data.status === 200) {
-                return data.data.response;  // Mengambil response dari data yang diterima
-            } else {
-                return "Maaf, terjadi kesalahan dalam merespons.";
-            }
+    sendBtn.addEventListener('click', async () => {
+      const userMessage = inputBox.value.trim();
+      if (userMessage) {
+        displayMessage(userMessage, 'user');
+        inputBox.value = ''; // Mengosongkan kotak input
+
+        const responseMessage = await getAIResponse(userMessage);
+        displayMessage(responseMessage, 'ai');
+      }
+    });
+
+    async function getAIResponse(userMessage) {
+      const url = `https://restapi.apibotwa.biz.id/api/gptlogic?message=${encodeURIComponent(userMessage)}&prompt=${encodeURIComponent(prompt)}`;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.status === 200) {
+          return data.data.response;  // Mengambil respons dari data yang diterima
+        } else {
+          return "Maaf, terjadi kesalahan dalam merespons.";
         }
+      } catch (error) {
+        console.error("Error fetching API:", error);
+        return "Terjadi error pada server.";
+      }
+    }
 
-        function displayMessage(message, sender) {
-            const messageRow = document.createElement('div');
-            messageRow.classList.add('message-row', sender);
+    function displayMessage(message, sender) {
+      const messageRow = document.createElement('div');
+      messageRow.classList.add('message-row', sender);
 
-            const messageContent = document.createElement('div');
-            messageContent.classList.add('message-content');
-            messageContent.innerHTML = `<p class="message-text">${message}</p>`;
+      const messageContent = document.createElement('div');
+      messageContent.classList.add('message-content');
+      messageContent.innerHTML = `<p class="message-text">${message}</p>`;
 
-            messageRow.appendChild(messageContent);
-            messagesContainer.appendChild(messageRow);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll to the bottom
-        }
-    </script>
+      messageRow.appendChild(messageContent);
+      messagesContainer.appendChild(messageRow);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll ke bagian bawah
+    }
+
+    // Contoh penggunaan Typed.js (misalnya untuk header)
+    document.addEventListener("DOMContentLoaded", () => {
+      new Typed(".header h1", {
+        strings: ["Chat AI", "Selamat Datang!"],
+        typeSpeed: 50,
+        backSpeed: 25,
+        loop: true
+      });
+    });
+  </script>
 </body>
 </html>
