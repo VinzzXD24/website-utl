@@ -53,6 +53,7 @@
             width: 100%;
             max-width: 400px;
             box-shadow: 0 4px 10px var(--shadow);
+            position: relative;
         }
 
         input, textarea {
@@ -87,7 +88,7 @@
             border-radius: 5px;
         }
 
-        /* Desain tombol yang lebih elegan */
+        /* Desain tombol */
         button {
             width: 100%;
             padding: 12px;
@@ -152,6 +153,30 @@
             box-shadow: 0px 6px 12px rgba(0, 136, 204, 0.5);
         }
 
+        /* Tombol kembali */
+        .back-button {
+            position: absolute;
+            top: -45px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .back-button a {
+            display: inline-block;
+            background: #444;
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-button a:hover {
+            background: #666;
+        }
+
     </style>
 </head>
 <body>
@@ -159,6 +184,11 @@
     <h2>Live Chat</h2>
 
     <div class="chat-container">
+        <!-- Tombol Kembali -->
+        <div class="back-button">
+            <a href="/">← Kembali</a>
+        </div>
+
         <input type="text" id="name" placeholder="Masukkan Nama Anda" required>
         <textarea id="message" placeholder="Tulis pesan..." required></textarea>
 
@@ -174,7 +204,6 @@
     </div>
 
     <script>
-        // Inisialisasi EmailJS dengan Public Key Anda
         emailjs.init("NpSJ7UpBwUyBXXC_n");
 
         function sendMessage() {
@@ -187,26 +216,20 @@
                 return;
             }
 
-            // Menampilkan pesan di chat box
             const messageElement = document.createElement("div");
             messageElement.classList.add("message");
             messageElement.innerHTML = `<strong>${name}:</strong> ${message}`;
             chatBox.appendChild(messageElement);
-            chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll ke bawah
+            chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Kirim pesan ke EmailJS
-            const templateParams = {
-                user_name: name,
-                user_message: message
-            };
+            const templateParams = { user_name: name, user_message: message };
 
-            emailjs.send("service_jfu0bgy", "template_gyunwtl", templateParams, "NpSJ7UpBwUyBXXC_n")
-                .then((response) => {
-                    console.log("Pesan berhasil dikirim", response);
+            emailjs.send("service_jfu0bgy", "template_gyunwtl", templateParams)
+                .then(() => {
                     alert("Pesan berhasil dikirim!");
-                    document.getElementById("message").value = ""; // Hapus input pesan setelah dikirim
-                }, (error) => {
-                    console.log("Gagal mengirim pesan", error);
+                    document.getElementById("message").value = "";
+                })
+                .catch(() => {
                     alert("Gagal mengirim pesan!");
                 });
         }
