@@ -1,79 +1,174 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon - NetCyzen AI</title>
-    <style>
-        :root {
-            --primary: #1e1e1e;
-            --secondary: #252525;
-            --text: #e5e5e5;
-            --text-light: #999999;
-            --border: #333333;
-            --shadow: rgba(0, 0, 0, 0.2);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background: var(--primary);
-            color: var(--text);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: var(--secondary);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px var(--shadow);
-            max-width: 600px;
-            width: 100%;
-        }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        p {
-            font-size: 16px;
-            color: var(--text-light);
-            margin-bottom: 20px;
-        }
-
-        .back-button {
-            display: inline-block;
-            padding: 12px 24px;
-            background: var(--input-bg);
-            color: var(--text);
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-
-        .back-button:hover {
-            background: var(--border);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coming Soon - Netcyzen AI</title>
+  <!-- Import Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Import Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary: #343541;
+      --secondary: #202123;
+      --accent: #00ff99;
+      --text: #e5e5e5;
+      --text-light: #aaaaaa;
+      --max-width: 1200px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      padding: 20px;
+      position: relative;
+    }
+    
+    /* Header */
+    header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+      animation: slideInDown 0.8s ease-out;
+    }
+    
+    header i {
+      font-size: 30px;
+      color: var(--text);
+    }
+    
+    header h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    
+    @keyframes slideInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      max-width: var(--max-width);
+      margin-top: 100px;
+      padding: 20px;
+      animation: fadeInUp 1s ease-out;
+    }
+    
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+    
+    .buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .button {
+      padding: 15px 30px;
+      background: var(--secondary);
+      border: 2px solid transparent;
+      border-radius: 8px;
+      font-size: 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    
+    .button:hover {
+      box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px);
+    }
+    
+    /* Tombol ketika ditekan akan berubah warna menjadi warna yang kurang menarik */
+    .button:active {
+      background: #ff0000;
+      transform: none;
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Footer */
+    .footer {
+      margin-top: 60px;
+      font-size: 0.9rem;
+      color: var(--text-light);
+      opacity: 0.7;
+      animation: fadeInUp 1.4s ease-out;
+      text-align: center;
+      width: 100%;
+    }
+    
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      header {
+        top: 10px;
+        left: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Coming Soon</h1>
-        <p>Fitur download aplikasi masih dalam pengembangan. Nantikan segera!</p>
-        <a href="/" class="back-button">Kembali</a>
+  <!-- Header dengan ikon robot -->
+  <header>
+    <i class="fas fa-robot"></i>
+    <h2>Netcyzen AI</h2>
+  </header>
+  
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Segera Hadir!</h1>
+    <p>
+      Kami sedang bekerja keras untuk menghadirkan fitur terbaru. Nantikan pembaruan dari kami dalam waktu dekat!
+    </p>
+    <div class="buttons">
+      <a href="index.html" class="button">Kembali ke Beranda</a>
     </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    © 2025 Netcyzen Software. All Rights Reserved.
+  </footer>
 </body>
 </html>
