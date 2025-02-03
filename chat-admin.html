@@ -1,35 +1,47 @@
-<script>
-  function loadMessages() {
-    const chatBox = document.getElementById("chat-box");
-    chatBox.innerHTML = ""; // Bersihkan chat sebelum memuat
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Chat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    let chatMessages = JSON.parse(localStorage.getItem("chatMessages")) || [];
-    chatMessages.forEach((msg) => {
-      const messageDiv = document.createElement("div");
-      messageDiv.classList.add("chat-message");
-      messageDiv.textContent = msg.name + ": " + msg.message;
-      chatBox.appendChild(messageDiv);
-    });
+  <h2>Pesan dari Pengguna</h2>
+  <div id="chat-box"></div>
+  
+  <input type="text" id="reply-message" placeholder="Balas pesan...">
+  <button onclick="sendReply()">Kirim</button>
 
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }
-
-  function sendReply() {
-    const replyMessage = document.getElementById("reply-message").value;
-    if (replyMessage.trim() !== "") {
+  <script>
+    function loadMessages() {
       const chatBox = document.getElementById("chat-box");
+      chatBox.innerHTML = "";
 
-      // Tambahkan pesan balasan admin
-      const messageDiv = document.createElement("div");
-      messageDiv.classList.add("chat-message", "admin-reply");
-      messageDiv.textContent = "Admin: " + replyMessage;
-      chatBox.appendChild(messageDiv);
-
-      document.getElementById("reply-message").value = "";
-      chatBox.scrollTop = chatBox.scrollHeight;
+      let chatMessages = JSON.parse(localStorage.getItem("chatMessages")) || [];
+      chatMessages.forEach((msg) => {
+        const messageDiv = document.createElement("div");
+        messageDiv.textContent = msg.name + ": " + msg.message;
+        chatBox.appendChild(messageDiv);
+      });
     }
-  }
 
-  // Load pesan saat admin masuk
-  window.onload = loadMessages;
-</script>
+    function sendReply() {
+      const replyMessage = document.getElementById("reply-message").value.trim();
+      if (replyMessage !== "") {
+        const chatBox = document.getElementById("chat-box");
+
+        const messageDiv = document.createElement("div");
+        messageDiv.textContent = "Admin: " + replyMessage;
+        chatBox.appendChild(messageDiv);
+
+        document.getElementById("reply-message").value = "";
+      }
+    }
+
+    window.onload = loadMessages;
+  </script>
+
+</body>
+</html>
