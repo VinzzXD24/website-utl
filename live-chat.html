@@ -18,9 +18,9 @@
             --border: #333333;
             --shadow: rgba(0, 0, 0, 0.2);
             --input-bg: #2e2e2e;
-            --button-color: #00ff99;
-            --button-hover: #00cc77;
-            --button-text: #101010;
+            --button-bg: linear-gradient(45deg, #007bff, #00d4ff);
+            --button-hover: linear-gradient(45deg, #0056b3, #00a1d4);
+            --button-text: white;
             --max-width: 900px;
         }
 
@@ -87,27 +87,31 @@
             border-radius: 5px;
         }
 
-        /* Desain tombol lebih modern */
+        /* Desain tombol yang lebih elegan */
         button {
             width: 100%;
             padding: 12px;
-            background: var(--button-color);
+            background: var(--button-bg);
             color: var(--button-text);
             border: none;
             border-radius: 6px;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s;
+            transition: background 0.3s ease, transform 0.2s, box-shadow 0.3s;
+            text-transform: uppercase;
+            box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.3);
         }
 
         button:hover {
             background: var(--button-hover);
             transform: scale(1.05);
+            box-shadow: 0px 6px 15px rgba(0, 123, 255, 0.5);
         }
 
         button:active {
             transform: scale(0.98);
+            box-shadow: 0px 2px 5px rgba(0, 123, 255, 0.3);
         }
 
         .social-buttons {
