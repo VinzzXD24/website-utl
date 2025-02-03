@@ -8,26 +8,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <!-- Import Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  
+
   <style>
     :root {
-      --primary: #343541;
-      --secondary: #202123;
-      --accent: #00ff99;
+      --primary: #1e1e1e;
+      --secondary: #252525;
       --text: #e5e5e5;
-      --text-light: #aaaaaa;
-      --max-width: 1200px;
+      --text-light: #999999;
+      --border: #333333;
+      --shadow: rgba(0, 0, 0, 0.2);
+      --input-bg: #2e2e2e;
+      --max-width: 900px;
     }
-    
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: var(--primary);
       color: var(--text);
       min-height: 100vh;
       display: flex;
@@ -36,66 +38,80 @@
       justify-content: center;
       overflow-x: hidden;
       padding: 20px;
-      position: relative;
     }
-    
+
     /* Header */
     header {
       position: absolute;
       top: 20px;
       left: 20px;
+      right: 20px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
       z-index: 100;
-      animation: slideInDown 0.8s ease-out;
+      background: var(--secondary);
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px var(--shadow);
     }
-    
+
     header i {
-      font-size: 30px; /* Ukuran ikon dikurangi */
+      font-size: 1.8rem;
       color: var(--text);
     }
-    
+
     header h2 {
       font-size: 1.4rem;
       font-weight: 600;
     }
-    
-    @keyframes slideInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+
+    .live-chat-button {
+      padding: 8px 15px;
+      background: var(--secondary);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background 0.3s ease, border 0.3s ease;
     }
-    
+
+    .live-chat-button:hover {
+      background: var(--border);
+      border-color: var(--text);
+    }
+
     /* Hero Section */
     .hero {
       text-align: center;
       max-width: var(--max-width);
       margin-top: 100px;
       padding: 20px;
-      animation: fadeInUp 1s ease-out;
     }
-    
+
     .hero h1 {
       font-size: 3rem;
       margin-bottom: 20px;
       font-weight: 600;
       line-height: 1.2;
     }
-    
+
     .hero p {
       font-size: 1.2rem;
       margin-bottom: 40px;
       color: var(--text-light);
       line-height: 1.5;
     }
-    
+
     .buttons {
       display: flex;
       gap: 20px;
       justify-content: center;
       flex-wrap: wrap;
     }
-    
+
     .button {
       padding: 15px 30px;
       background: var(--secondary);
@@ -106,55 +122,45 @@
       color: var(--text);
       transition: box-shadow 0.3s, transform 0.3s;
     }
-    
+
     .button:hover {
       box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
       transform: translateY(-3px);
     }
-    
-    /* Tombol ketika ditekan akan berubah warna menjadi warna yang kurang menarik */
-    .button:active {
-      background: #ff0000;
-      transform: none;
-    }
-    
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
+
     /* Info Section */
     .info {
       text-align: center;
       margin-top: 80px;
       max-width: 800px;
-      animation: fadeInUp 1.2s ease-out;
     }
-    
+
     .info h2 {
       font-size: 2rem;
       margin-bottom: 20px;
       font-weight: 500;
     }
-    
+
     .info p {
       font-size: 1rem;
       color: var(--text-light);
       line-height: 1.5;
       margin-bottom: 10px;
     }
-    
+
     /* Footer */
     .footer {
       margin-top: 60px;
       font-size: 0.9rem;
       color: var(--text-light);
       opacity: 0.7;
-      animation: fadeInUp 1.4s ease-out;
       text-align: center;
       width: 100%;
+      padding: 20px;
+      background: var(--secondary);
+      border-top: 1px solid var(--border);
     }
-    
+
     @media (max-width: 600px) {
       .hero h1 {
         font-size: 2.5rem;
@@ -165,17 +171,20 @@
       header {
         top: 10px;
         left: 10px;
+        right: 10px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Header dengan ikon robot -->
+
+  <!-- Header dengan ikon robot dan tombol Live Chat -->
   <header>
     <i class="fas fa-robot"></i>
     <h2>Netcyzen AI</h2>
+    <a href="live-chat.html" class="live-chat-button">Live Chat</a>
   </header>
-  
+
   <!-- Hero Section -->
   <section class="hero">
     <h1>Temukan Jawaban. Temukan Inspirasi.</h1>
@@ -187,7 +196,7 @@
       <a href="coming-soon.html" class="button">Download Aplikasi</a>
     </div>
   </section>
-  
+
   <!-- Info Section -->
   <section class="info">
     <h2>Tentang Netcyzen AI</h2>
@@ -198,10 +207,11 @@
       Saat ini, Netcyzen AI belum mendukung pembuatan coding. Nantikan pembaruan dan fitur-fitur menarik lainnya!
     </p>
   </section>
-  
+
   <!-- Footer -->
   <footer class="footer">
     © 2025 Netcyzen Software. All Rights Reserved.
   </footer>
+
 </body>
 </html>
