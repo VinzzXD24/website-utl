@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coming Soon - Netcyzen AI</title>
+  <!-- Import Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #343541;
+      --secondary: #202123;
+      --accent: #00ff99;
+      --text: #e5e5e5;
+      --text-light: #aaaaaa;
+      --max-width: 1200px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    
+    /* Header */
+    header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+      animation: slideInDown 0.8s ease-out;
+    }
+    
+    header img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    header h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    
+    @keyframes slideInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Container untuk Coming Soon */
+    .container {
+      text-align: center;
+      max-width: var(--max-width);
+      padding: 40px 20px;
+      background: var(--secondary);
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      animation: fadeInUp 1s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .container h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    
+    .container p {
+      font-size: 1rem;
+      color: var(--text-light);
+      line-height: 1.5;
+      margin-bottom: 30px;
+    }
+    
+    .button {
+      padding: 15px 30px;
+      background: var(--secondary);
+      border: 2px solid transparent;
+      border-radius: 8px;
+      font-size: 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    
+    .button:hover {
+      box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px);
+    }
+    
+    .button:active {
+      background: #ff0000;
+      transform: none;
+    }
+    
+    /* Footer */
+    .footer {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: var(--text-light);
+      opacity: 0.7;
+      animation: fadeInUp 1.4s ease-out;
+    }
+    
+    @media (max-width: 600px) {
+      header {
+        top: 10px;
+        left: 10px;
+      }
+      .container h1 {
+        font-size: 2rem;
+      }
+      .container p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header dengan logo Cloudflare Ajax -->
+  <header>
+    <img src="https://www.cloudflare.com/img/brand-assets/cloudflare-icon.svg" alt="Logo Netcyzen AI">
+    <h2>Netcyzen AI</h2>
+  </header>
+  
+  <!-- Container Coming Soon -->
+  <div class="container">
+    <h1>Coming Soon</h1>
+    <p>
+      Fitur download aplikasi sedang dalam pengembangan. Nantikan segera pembaruan dan fitur-fitur menarik dari Netcyzen AI!
+    </p>
+    <a href="index.html" class="button">Kembali</a>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    © 2025 Netcyzen Software. All Rights Reserved.
+  </footer>
+</body>
+</html>
