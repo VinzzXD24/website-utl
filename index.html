@@ -3,19 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NetCyzen AI Chat</title>
+  <title>Netcyzen AI Chat</title>
   <!-- Import Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
- :root {
-  --primary: #343541;
-  --secondary: #202123;
-  --accent: #00ff99; /* atau kamu bisa sesuaikan sesuai keinginan */
-  --text: #e5e5e5;
-  --text-light: #aaaaaa;
-  --max-width: 1200px;
-}
-
+    :root {
+      --primary: #343541;
+      --secondary: #202123;
+      --accent: #00ff99;
+      --text: #e5e5e5;
+      --text-light: #aaaaaa;
+      --max-width: 1200px;
+    }
     
     * {
       margin: 0;
@@ -103,13 +102,18 @@
       font-size: 1rem;
       text-decoration: none;
       color: var(--text);
-      transition: background 0.3s, transform 0.3s, border-color 0.3s;
+      transition: box-shadow 0.3s, transform 0.3s;
     }
     
     .button:hover {
-      background: var(--accent);
-      border-color: var(--accent);
+      box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
       transform: translateY(-3px);
+    }
+    
+    /* Tombol ketika ditekan akan berubah warna menjadi warna yang kurang menarik */
+    .button:active {
+      background: #ff0000;
+      transform: none;
     }
     
     @keyframes fadeInUp {
@@ -162,17 +166,18 @@
   </style>
 </head>
 <body>
-  <!-- Header dengan logo lokal -->
+  <!-- Header dengan logo Cloudflare Ajax -->
   <header>
-    <img src="images/vinzz.jpg" alt="Logo NetCyzen AI">
-    <h2>NetCyzen AI</h2>
+    <!-- Menggunakan ikon Cloudflare Ajax -->
+    <img src="https://www.cloudflare.com/img/brand-assets/cloudflare-icon.svg" alt="Logo Netcyzen AI">
+    <h2>Netcyzen AI</h2>
   </header>
   
   <!-- Hero Section -->
   <section class="hero">
     <h1>Temukan Jawaban. Temukan Inspirasi.</h1>
     <p>
-      Selami dunia percakapan mendalam dengan AI canggih kami. Dapatkan wawasan dan solusi untuk setiap pertanyaan Anda.
+      Jelajahi percakapan mendalam dengan teknologi AI kami. Dapatkan wawasan dan solusi yang inspiratif untuk setiap pertanyaan Anda.
     </p>
     <div class="buttons">
       <a href="https://chat.netcyzen.software" class="button">Mulai Chat</a>
@@ -182,15 +187,18 @@
   
   <!-- Info Section -->
   <section class="info">
-    <h2>Tentang NetCyzen AI</h2>
+    <h2>Tentang Netcyzen AI</h2>
     <p>
-      NetCyzen AI adalah platform percakapan berbasis kecerdasan buatan yang menggabungkan teknologi mutakhir dengan antarmuka minimalis untuk memberikan pengalaman interaktif yang mendalam.
+      Netcyzen AI adalah platform percakapan berbasis kecerdasan buatan yang menggabungkan teknologi terkini dengan antarmuka yang minimalis dan modern.
+    </p>
+    <p>
+      Saat ini, Netcyzen AI belum mendukung pembuatan coding. Nantikan pembaruan dan fitur-fitur menarik lainnya!
     </p>
   </section>
   
   <!-- Footer -->
   <footer class="footer">
-    © 2025 NetCyzen Software. All Rights Reserved.
+    © 2025 Netcyzen Software. All Rights Reserved.
   </footer>
 </body>
 </html>
