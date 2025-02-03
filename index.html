@@ -1,137 +1,196 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netcyzen AI Chat</title>
-    <style>
-        :root {
-            --primary: #1e1e1e;
-            --secondary: #252525;
-            --text: #e5e5e5;
-            --text-light: #999999;
-            --border: #333333;
-            --shadow: rgba(0, 0, 0, 0.2);
-            --input-bg: #2e2e2e;
-            --button-hover: #3a3a3a;
-            --max-width: 900px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NetCyzen AI Chat</title>
+  <!-- Import Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+ :root {
+  --primary: #343541;
+  --secondary: #202123;
+  --accent: #00ff99; /* atau kamu bisa sesuaikan sesuai keinginan */
+  --text: #e5e5e5;
+  --text-light: #aaaaaa;
+  --max-width: 1200px;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background: var(--primary);
-            color: var(--text);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-            padding: 20px;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .logo {
-            width: 40px;
-            height: 40px;
-        }
-
-        .container {
-            background: var(--secondary);
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px var(--shadow);
-            max-width: var(--max-width);
-            width: 100%;
-            animation: fadeIn 1.2s ease-in-out;
-        }
-
-        h1 {
-            font-size: 26px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        p {
-            font-size: 15px;
-            color: var(--text-light);
-            margin-bottom: 20px;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 14px 26px;
-            background: var(--input-bg);
-            color: var(--text);
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 16px;
-            transition: 0.3s;
-            margin: 10px 5px;
-            width: 220px;
-            font-weight: 500;
-            border: 2px solid transparent;
-        }
-
-        .button:hover {
-            background: var(--button-hover);
-            border-color: var(--border);
-        }
-
-        .info {
-            margin-top: 30px;
-            text-align: center;
-            max-width: var(--max-width);
-            animation: fadeIn 1.5s ease-in-out;
-        }
-
-        .footer {
-            margin-top: 40px;
-            font-size: 13px;
-            color: var(--text-light);
-            opacity: 0.7;
-        }
-    </style>
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      padding: 20px;
+    }
+    
+    /* Header */
+    header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+      animation: slideInDown 0.8s ease-out;
+    }
+    
+    header img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    header h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    
+    @keyframes slideInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      max-width: var(--max-width);
+      margin-top: 100px;
+      padding: 20px;
+      animation: fadeInUp 1s ease-out;
+    }
+    
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+    
+    .buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .button {
+      padding: 15px 30px;
+      background: var(--secondary);
+      border: 2px solid transparent;
+      border-radius: 8px;
+      font-size: 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: background 0.3s, transform 0.3s, border-color 0.3s;
+    }
+    
+    .button:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Info Section */
+    .info {
+      text-align: center;
+      margin-top: 80px;
+      max-width: 800px;
+      animation: fadeInUp 1.2s ease-out;
+    }
+    
+    .info h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    
+    .info p {
+      font-size: 1rem;
+      color: var(--text-light);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    
+    /* Footer */
+    .footer {
+      margin-top: 60px;
+      font-size: 0.9rem;
+      color: var(--text-light);
+      opacity: 0.7;
+      animation: fadeInUp 1.4s ease-out;
+    }
+    
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      header {
+        top: 10px;
+        left: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <img src="images/vinzz.jpg" alt="Logo" class="logo">
-        <h2>NetCyzen AI</h2>
+  <!-- Header dengan logo lokal -->
+  <header>
+    <img src="images/vinzz.jpg" alt="Logo NetCyzen AI">
+    <h2>NetCyzen AI</h2>
+  </header>
+  
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Temukan Jawaban. Temukan Inspirasi.</h1>
+    <p>
+      Selami dunia percakapan mendalam dengan AI canggih kami. Dapatkan wawasan dan solusi untuk setiap pertanyaan Anda.
+    </p>
+    <div class="buttons">
+      <a href="https://chat.netcyzen.software" class="button">Mulai Chat</a>
+      <a href="coming-soon.html" class="button">Download Aplikasi</a>
     </div>
-
-    <div class="container">
-        <h1>Selamat Datang di Netcyzen AI Chat</h1>
-        <p>Chat dengan AI canggih kami dengan tampilan yang simpel dan modern.</p>
-        <a href="https://chat.netcyzen.software" class="button">Mulai Chat</a>
-        <a href="download.html" class="button">Download Aplikasi</a>
-    </div>
-    
-    <div class="info">
-        <h2>Tentang Netcyzen AI</h2>
-        <p>NetCyzen AI adalah platform chat berbasis kecerdasan buatan yang membantu Anda dalam berbagai percakapan interaktif.</p>
-        <p>Teknologi canggih kami memberikan pengalaman chatting yang responsif dan intuitif.</p>
-    </div>
-
-    <div class="footer">
-        © 2025 Netcyzen Software. All Rights Reserved.
-    </div>
+  </section>
+  
+  <!-- Info Section -->
+  <section class="info">
+    <h2>Tentang NetCyzen AI</h2>
+    <p>
+      NetCyzen AI adalah platform percakapan berbasis kecerdasan buatan yang menggabungkan teknologi mutakhir dengan antarmuka minimalis untuk memberikan pengalaman interaktif yang mendalam.
+    </p>
+  </section>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    © 2025 NetCyzen Software. All Rights Reserved.
+  </footer>
 </body>
 </html>
