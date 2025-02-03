@@ -1,97 +1,160 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live Chat</title>
-  <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Chat - Netcyzen AI</title>
+    
+    <!-- Import Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #1e1e1e;
+            --secondary: #252525;
+            --text: #e5e5e5;
+            --text-light: #999999;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.2);
+            --input-bg: #2e2e2e;
+            --max-width: 900px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .chat-container {
+            background: var(--secondary);
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 10px var(--shadow);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: var(--input-bg);
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #00ff99;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #00cc77;
+        }
+
+        .social-buttons {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .social-buttons a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            width: 48%;
+            text-align: center;
+        }
+
+        .whatsapp {
+            background: #25D366;
+        }
+
+        .telegram {
+            background: #0088cc;
+        }
+
+    </style>
 </head>
 <body>
 
-  <!-- Form Input Nama -->
-  <div id="name-form">
-    <h2>Masukkan Nama Anda</h2>
-    <input type="text" id="username" placeholder="Nama Anda">
-    <button onclick="startChat()">Mulai Chat</button>
-  </div>
-
-  <!-- Chat Box -->
-  <div id="chat-container" style="display: none;">
     <h2>Live Chat</h2>
-    <div id="chat-box"></div>
-    <input type="text" id="message" placeholder="Ketik pesan...">
-    <button onclick="sendMessage()">Kirim</button>
 
-    <!-- Tombol WhatsApp & Telegram -->
-    <div class="social-buttons">
-      <a href="https://wa.me/6285179963877" target="_blank">Chat via WhatsApp</a>
-      <a href="https://t.me/NetcyzenAI" target="_blank">Chat via Telegram</a>
+    <div class="chat-container">
+        <input type="text" id="name" placeholder="Masukkan Nama Anda" required>
+        <textarea id="message" placeholder="Tulis pesan..." required></textarea>
+        <button onclick="sendEmail()">Kirim</button>
+
+        <div class="social-buttons">
+            <a href="https://wa.me/6285179963877" class="whatsapp" target="_blank">WhatsApp</a>
+            <a href="https://t.me/NetcyzenAI" class="telegram" target="_blank">Telegram</a>
+        </div>
     </div>
-  </div>
 
-  <script>
-    let userName = localStorage.getItem("chatUserName");
+    <script>
+        // Inisialisasi EmailJS dengan Public Key Anda
+        emailjs.init("NpSJ7UpBwUyBXXC_n");
 
-    // Inisialisasi EmailJS
-    emailjs.init("YOUR_USER_ID");
+        function sendEmail() {
+            const name = document.getElementById("name").value;
+            const message = document.getElementById("message").value;
 
-    function startChat() {
-      const nameInput = document.getElementById("username").value.trim();
-      if (nameInput) {
-        userName = nameInput;
-        localStorage.setItem("chatUserName", userName);
-        document.getElementById("name-form").style.display = "none";
-        document.getElementById("chat-container").style.display = "block";
-      } else {
-        alert("Masukkan nama terlebih dahulu!");
-      }
-    }
+            if (!name || !message) {
+                alert("Harap isi nama dan pesan!");
+                return;
+            }
 
-    function sendMessage() {
-      const messageInput = document.getElementById("message").value.trim();
-      if (messageInput) {
-        const chatBox = document.getElementById("chat-box");
+            const templateParams = {
+                user_name: name,
+                user_message: message
+            };
 
-        // Tampilkan pesan di chat
-        const userMessage = document.createElement("div");
-        userMessage.textContent = userName + ": " + messageInput;
-        chatBox.appendChild(userMessage);
-
-        // Simpan pesan di localStorage
-        let chatMessages = JSON.parse(localStorage.getItem("chatMessages")) || [];
-        chatMessages.push({ name: userName, message: messageInput });
-        localStorage.setItem("chatMessages", JSON.stringify(chatMessages));
-
-        // Kirim pesan ke email
-        sendEmail(userName, messageInput);
-
-        // Kosongkan input pesan
-        document.getElementById("message").value = "";
-      }
-    }
-
-    // Kirim pesan ke email via EmailJS
-    function sendEmail(name, message) {
-      const templateParams = {
-        user_name: name,
-        user_message: message
-      };
-
-      emailjs.send("service_jfu0bgy", "Gmail", templateParams)
-        .then((response) => {
-          console.log("Pesan berhasil dikirim", response);
-        }, (error) => {
-          console.log("Gagal mengirim pesan", error);
-        });
-    }
-
-    // Jika pengguna sudah login, langsung tampilkan chat
-    if (userName) {
-      document.getElementById("name-form").style.display = "none";
-      document.getElementById("chat-container").style.display = "block";
-    }
-  </script>
+            emailjs.send("service_jfu0bgy", "template_gyunwtl", templateParams)
+                .then((response) => {
+                    console.log("Pesan berhasil dikirim", response);
+                    alert("Pesan berhasil dikirim!");
+                    document.getElementById("message").value = ""; // Hapus pesan setelah dikirim
+                }, (error) => {
+                    console.log("Gagal mengirim pesan", error);
+                    alert("Gagal mengirim pesan!");
+                });
+        }
+    </script>
 
 </body>
 </html>
