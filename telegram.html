@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegram Sticker Downloader</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
+  <style>
+    :root {
+      --primary-color: #0088cc;
+      --background-color: #121212;
+      --secondary-color: #1a1a1a;
+      --highlight-color: #0099cc;
+      --border-color: #444444;
+      --text-color: #ffffff;
+      --input-bg-color: #2d2d2d;
+      --button-hover-color: #0077b3;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+      --font-family: 'Poppins', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--background-color);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      padding: 1.5rem;
+      text-align: center;
+      background: var(--secondary-color);
+      box-shadow: 0 4px 15px var(--shadow-color);
+      margin-bottom: 2rem;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .icon {
+      font-size: 2.2rem;
+      color: #0088cc; /* Warna biru khas Telegram */
+      animation: pulse 2s infinite;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--text-color);
+    }
+
+    .container {
+      flex: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      width: 90%;
+    }
+
+    .input-group {
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 1.2rem;
+      background: var(--input-bg-color);
+      border: 2px solid var(--border-color);
+      color: var(--text-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      padding-right: 140px;
+    }
+
+    .input-field:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 10px rgba(0, 136, 204, 0.3);
+      outline: none;
+    }
+
+    .button {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 0.8rem 1.5rem;
+      background: var(--primary-color);
+      border: none;
+      border-radius: 6px;
+      color: var(--text-color);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .button:hover {
+      background: var(--button-hover-color);
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .download-section {
+      margin-top: 2rem;
+      background: var(--input-bg-color);
+      padding: 1.5rem;
+      border-radius: 8px;
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .download-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--text-color);
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .download-link:hover {
+      transform: translateX(10px);
+    }
+
+    .download-icon {
+      font-size: 1.5rem;
+      color: var(--highlight-color);
+    }
+
+    .warning {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: var(--input-bg-color);
+      border-left: 4px solid var(--primary-color);
+      border-radius: 6px;
+    }
+
+    .warning p {
+      line-height: 1.6;
+      font-size: 0.9rem;
+      color: #cccccc;
+    }
+
+    .copyright-warning {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: var(--input-bg-color);
+      border-left: 4px solid #ff3b30;
+      border-radius: 6px;
+    }
+
+    .copyright-warning p {
+      font-size: 0.9rem;
+      color: #cccccc;
+      line-height: 1.6;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--secondary-color);
+      margin-top: auto;
+      border-top: 1px solid var(--border-color);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+        width: 95%;
+      }
+      
+      .button {
+        position: relative;
+        width: 100%;
+        margin-top: 1rem;
+        transform: none;
+        right: auto;
+        top: auto;
+      }
+      
+      .input-field {
+        padding-right: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <i class="fab fa-telegram-plane icon"></i>
+      <h2>Telegram Sticker Downloader</h2>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="input-group">
+      <input type="text" class="input-field" id="sticker-query" placeholder="Masukkan query stiker Telegram">
+      <button class="button" onclick="downloadSticker()">Download</button>
+    </div>
+
+    <div class="download-section" id="download-section">
+      <a href="#" class="download-link" id="download-link">
+        <i class="fas fa-download download-icon"></i>
+        <span>Download Stiker</span>
+      </a>
+    </div>
+
+    <div class="warning">
+      <p>Masukkan query stiker Telegram yang valid untuk mendapatkan hasilnya.</p>
+    </div>
+
+    <div class="copyright-warning">
+      <p>Harap dicatat bahwa penggunaan stiker Telegram tanpa izin dapat melanggar hak cipta dan ketentuan penggunaan Telegram. Gunakan hanya stiker yang Anda miliki haknya.</p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2025 Telegram Sticker Downloader | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    function downloadSticker() {
+      const query = document.getElementById('sticker-query').value;
+      fetch(`https://api.siputzx.my.id/api/d/telegramsticker?query=${query}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.status) {
+            const stickerUrl = data.path;
+            document.getElementById('download-section').style.display = 'block';
+            document.getElementById('download-link').href = stickerUrl;
+          } else {
+            alert('Stiker tidak ditemukan atau ada kesalahan.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Terjadi kesalahan, coba lagi nanti.');
+        });
+    }
+  </script>
+</body>
+</html>
