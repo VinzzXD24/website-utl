@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube MP4 Downloader</title>
+  <style>
+    :root {
+      --primary: #1e1e1e;
+      --secondary: #252525;
+      --text: #e5e5e5;
+      --text-light: #999999;
+      --border: #333333;
+      --shadow: rgba(0, 0, 0, 0.2);
+      --input-bg: #2e2e2e;
+      --max-width: 900px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--primary);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      padding: 20px;
+    }
+
+    header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      z-index: 100;
+      background: var(--secondary);
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px var(--shadow);
+    }
+
+    header i {
+      font-size: 1.8rem;
+      color: var(--text);
+    }
+
+    header h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    .input-field {
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    .button {
+      padding: 10px 20px;
+      background: var(--secondary);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background: var(--border);
+    }
+
+    .thumbnail {
+      max-width: 100%;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .download-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: var(--secondary);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--text);
+      display: none;
+      cursor: pointer;
+    }
+
+    .download-button:hover {
+      background: var(--border);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>YouTube MP4 Downloader</h2>
+  </header>
+
+  <div class="container">
+    <input type="text" class="input-field" id="url" placeholder="Masukkan URL YouTube">
+    <button class="button" onclick="getYouTubeData()">Download</button>
+
+    <div class="thumbnail" id="thumbnail">
+      <img src="" alt="Thumbnail" id="thumbnail-img">
+    </div>
+
+    <button class="download-button" id="download-btn" onclick="downloadVideo()">Download Video</button>
+  </div>
+
+  <script>
+    // Function to validate URL and fetch video data
+    function getYouTubeData() {
+      const url = document.getElementById("url").value.trim();
+      const thumbnail = document.getElementById("thumbnail");
+      const thumbnailImg = document.getElementById("thumbnail-img");
+      const downloadBtn = document.getElementById("download-btn");
+
+      const youtubeRegex1 = /^(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.)?youtube\.com\/(?:watch\?v=|embed\/|v\/))([a-zA-Z0-9_-]{11})(?:[?&][^\s]*)?$/;
+      const youtubeRegex2 = /^https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})$/;
+      const youtubeRegex3 = /^https?:\/\/(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]{11})$/;
+
+      if (youtubeRegex1.test(url) || youtubeRegex2.test(url) || youtubeRegex3.test(url)) {
+        const videoId = RegExp.$1;
+
+        // Fetch data from API
+        fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=https://youtube.com/watch?v=${videoId}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.status) {
+              // Show Thumbnail
+              thumbnail.style.display = "block";
+              thumbnailImg.src = data.data.thumbnail;
+              downloadBtn.style.display = "inline-block";
+
+              // Store video download URL
+              downloadBtn.onclick = function() {
+                window.location.href = data.data.dl;
+              };
+            }
+          })
+          .catch(err => alert("Error fetching data from API."));
+      } else {
+        alert("URL tidak valid! Silakan masukkan URL YouTube yang valid.");
+      }
+    }
+
+    // Function to download the video (using the direct link)
+    function downloadVideo() {
+      const videoUrl = document.getElementById("video-url").value;
+      if (videoUrl) {
+        window.location.href = videoUrl;
+      }
+    }
+  </script>
+</body>
+</html>
