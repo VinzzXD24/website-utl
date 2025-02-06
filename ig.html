@@ -9,7 +9,6 @@
             --primary: #1e1e1e;
             --secondary: #252525;
             --text: #e5e5e5;
-            --text-light: #999999;
             --border: #333333;
             --shadow: rgba(0, 0, 0, 0.2);
             --input-bg: #2e2e2e;
@@ -73,9 +72,15 @@
 
         .media-preview {
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             border-radius: 10px;
             margin-top: 10px;
+        }
+
+        video {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
         }
 
         .download-btn {
@@ -122,14 +127,12 @@
                         data.data.forEach(item => {
                             let isVideo = item.url.includes(".mp4");
                             let mediaElement = isVideo 
-                                ? `<video class="media-preview" controls><source src="${item.url}" type="video/mp4">Browser tidak mendukung video.</video>`
+                                ? `<video controls><source src="${item.url}" type="video/mp4">Browser tidak mendukung video.</video>`
                                 : `<img class="media-preview" src="${item.url}" alt="Gambar">`;
-
-                            let fileType = isVideo ? "Video" : "Foto";
 
                             resultDiv.innerHTML += `
                                 ${mediaElement}
-                                <a href="${item.url}" class="download-btn" download>Download ${fileType}</a>
+                                <a href="${item.url}" class="download-btn" download>Download</a>
                             `;
                         });
                     } else {
