@@ -155,20 +155,6 @@
       color: #cccccc;
     }
 
-    .copyright-warning {
-      margin-top: 2rem;
-      padding: 1.5rem;
-      background: var(--input-bg-color);
-      border-left: 4px solid #ff3b30;
-      border-radius: 6px;
-    }
-
-    .copyright-warning p {
-      font-size: 0.9rem;
-      color: #cccccc;
-      line-height: 1.6;
-    }
-
     .footer {
       text-align: center;
       padding: 1.5rem;
@@ -220,7 +206,7 @@
   <div class="container">
     <div class="input-group">
       <input type="text" class="input-field" id="pinterest-url" placeholder="Masukkan URL Pin Pinterest">
-      <button class="button" onclick="downloadPinterest()">Download</button>
+      <button class="button" type="button" onclick="downloadPinterest(event)">Download</button>
     </div>
 
     <div class="download-section" id="download-section">
@@ -233,10 +219,6 @@
     <div class="warning">
       <p>Masukkan URL Pin Pinterest yang valid untuk mendapatkan hasilnya.</p>
     </div>
-
-    <div class="copyright-warning">
-      <p>Harap dicatat bahwa unduhan konten tanpa izin dapat melanggar hak cipta dan ketentuan penggunaan Pinterest. Gunakan hanya konten yang Anda miliki haknya.</p>
-    </div>
   </div>
 
   <footer class="footer">
@@ -244,7 +226,9 @@
   </footer>
 
   <script>
-    function downloadPinterest() {
+    function downloadPinterest(event) {
+      if (event) event.preventDefault(); // Mencegah aksi default tombol
+
       const url = document.getElementById('pinterest-url').value;
       fetch(`https://api.siputzx.my.id/api/d/pinterest?url=${url}`)
         .then(response => response.json())
