@@ -115,12 +115,18 @@
     }
 
     .download-section {
-      margin-top: 2rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
       background: var(--input-bg-color);
       padding: 1.5rem;
       border-radius: 8px;
-      display: none;
-      animation: fadeIn 0.5s ease;
+      margin-top: 2rem;
+    }
+
+    .download-section.show {
+      opacity: 1;
+      visibility: visible;
     }
 
     .download-link {
@@ -155,6 +161,20 @@
       color: #cccccc;
     }
 
+    .copyright-warning {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: var(--input-bg-color);
+      border-left: 4px solid #ff3b30;
+      border-radius: 6px;
+    }
+
+    .copyright-warning p {
+      font-size: 0.9rem;
+      color: #cccccc;
+      line-height: 1.6;
+    }
+
     .footer {
       text-align: center;
       padding: 1.5rem;
@@ -167,11 +187,6 @@
       0% { transform: scale(1); }
       50% { transform: scale(1.1); }
       100% { transform: scale(1); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     @media (max-width: 768px) {
@@ -206,18 +221,22 @@
   <div class="container">
     <div class="input-group">
       <input type="text" class="input-field" id="pinterest-url" placeholder="Masukkan URL Pin Pinterest">
-      <button class="button" type="button" onclick="downloadPinterest(event)">Download</button>
+      <button class="button" onclick="downloadPinterest()">Download</button>
     </div>
 
     <div class="download-section" id="download-section">
       <a href="#" class="download-link" id="download-link">
         <i class="fas fa-download download-icon"></i>
-        <span>Download Video</span>
+        <span>Download</span>
       </a>
     </div>
 
     <div class="warning">
       <p>Masukkan URL Pin Pinterest yang valid untuk mendapatkan hasilnya.</p>
+    </div>
+
+    <div class="copyright-warning">
+      <p>Harap dicatat bahwa unduhan konten tanpa izin dapat melanggar hak cipta dan ketentuan penggunaan Pinterest. Gunakan hanya konten yang Anda miliki haknya.</p>
     </div>
   </div>
 
@@ -227,22 +246,20 @@
 
   <script>
     function downloadPinterest(event) {
-      if (event) event.preventDefault(); // Mencegah aksi default tombol
+      if (event) event.preventDefault(); 
 
       const url = document.getElementById('pinterest-url').value;
       fetch(`https://api.siputzx.my.id/api/d/pinterest?url=${url}`)
         .then(response => response.json())
         .then(data => {
           if (data.status) {
-            const downloadUrl = data.data.url;
-            document.getElementById('download-section').style.display = 'block';
-            document.getElementById('download-link').href = downloadUrl;
+            document.getElementById('download-link').href = data.data.url;
+            document.getElementById('download-section').classList.add('show');
           } else {
             alert('Video tidak ditemukan atau ada kesalahan.');
           }
         })
         .catch(error => {
-          console.error('Error:', error);
           alert('Terjadi kesalahan, coba lagi nanti.');
         });
     }
