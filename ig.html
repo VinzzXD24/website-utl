@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .result img {
+            width: 100%;
+            max-width: 300px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        a {
+            display: block;
+            text-decoration: none;
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Instagram Video Downloader</h2>
+        <input type="text" id="urlInput" placeholder="Masukkan URL Instagram" required>
+        <button onclick="downloadInstagram()">Download</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function downloadInstagram() {
+            let url = document.getElementById("urlInput").value;
+            if (!url) {
+                alert("Masukkan URL Instagram!");
+                return;
+            }
+
+            let apiUrl = `https://api.siputzx.my.id/api/d/igdl?url=${encodeURIComponent(url)}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status) {
+                        let resultDiv = document.getElementById("result");
+                        resultDiv.innerHTML = "<h3>Hasil:</h3>";
+
+                        data.data.forEach(item => {
+                            resultDiv.innerHTML += `
+                                <img src="${item.thumbnail}" alt="Thumbnail">
+                                <a href="${item.url}" download>Download Video</a>
+                            `;
+                        });
+                    } else {
+                        alert("Terjadi kesalahan, periksa URL yang dimasukkan.");
+                    }
+                })
+                .catch(error => {
+                    alert("Gagal mengambil data dari API.");
+                    console.error(error);
+                });
+        }
+    </script>
+</body>
+</html>
