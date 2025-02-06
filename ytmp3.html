@@ -52,7 +52,7 @@
 
     .icon {
       font-size: 2.2rem;
-      color: var(--primary-color); /* Hanya ikon yang berwarna merah */
+      color: var(--primary-color);
       animation: pulse 2s infinite;
     }
 
@@ -60,7 +60,7 @@
       font-size: 1.8rem;
       font-weight: 600;
       letter-spacing: 0.5px;
-      color: var(--text-color); /* Teks header berwarna putih */
+      color: var(--text-color);
     }
 
     .container {
@@ -74,6 +74,8 @@
     .input-group {
       margin: 2rem 0;
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
     .input-field {
@@ -95,27 +97,22 @@
     }
 
     .button {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 0.8rem 1.5rem;
-  background: var(--primary-color);
-  border: none;
-  border-radius: 6px;
-  color: var(--text-color);
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap; /* Menjaga tombol tetap pada ukuran aslinya */
-}
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.8rem 1.5rem;
+      background: var(--primary-color);
+      border: none;
+      border-radius: 6px;
+      color: var(--text-color);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-.button:hover {
-  background: var(--button-hover-color);
-  /* Hilangkan transformasi pembesaran */
-  box-shadow: 0 0 10px rgba(255, 59, 48, 0.3); /* Tambahkan efek bayangan untuk hover */
-}
-
+    .button:hover {
+      background: var(--button-hover-color);
+      box-shadow: 0 0 10px rgba(255, 59, 48, 0.3);
+    }
 
     .download-section {
       margin-top: 2rem;
@@ -124,22 +121,22 @@
       border-radius: 8px;
       display: none;
       animation: fadeIn 0.5s ease;
+      margin-bottom: 1rem;
     }
 
     .download-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  text-decoration: none;
-  color: var(--text-color);
-  font-weight: bold;
-}
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: bold;
+    }
 
-.download-link:hover {
-  color: var(--highlight-color);
-}
-    
+    .download-link:hover {
+      color: var(--highlight-color);
+    }
 
     .download-icon {
       font-size: 1.5rem;
@@ -152,6 +149,7 @@
       background: var(--input-bg-color);
       border-left: 4px solid var(--primary-color);
       border-radius: 6px;
+      margin-bottom: 1rem;
     }
 
     .warning p {
@@ -184,7 +182,7 @@
         padding: 1rem;
         width: 95%;
       }
-      
+
       .button {
         position: relative;
         width: 100%;
@@ -193,7 +191,7 @@
         right: auto;
         top: auto;
       }
-      
+
       .input-field {
         padding-right: 1.2rem;
       }
