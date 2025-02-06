@@ -7,14 +7,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     :root {
-      --primary: #1e1e1e;
-      --secondary: #252525;
-      --text: #e5e5e5;
-      --text-light: #999999;
-      --border: #333333;
-      --shadow: rgba(0, 0, 0, 0.2);
-      --input-bg: #2e2e2e;
-      --max-width: 900px;
+      --primary-color: #ff3b30; /* Red for accent */
+      --background-color: #121212; /* Dark background for a sleek look */
+      --secondary-color: #333333; /* Darker gray for sections */
+      --highlight-color: #ff5722; /* Orange for highlights */
+      --border-color: #444444; /* Soft border for input fields */
+      --text-color: #e5e5e5; /* Light text for contrast */
+      --input-bg-color: #1e1e1e; /* Input field dark background */
+      --button-hover-color: #ff7043; /* Button hover effect */
+      --shadow-color: rgba(0, 0, 0, 0.5); /* Subtle shadow */
+      --font-family: 'Poppins', sans-serif;
     }
 
     * {
@@ -24,84 +26,96 @@
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--primary);
-      color: var(--text);
-      min-height: 100vh;
+      font-family: var(--font-family);
+      background: var(--background-color);
+      color: var(--text-color);
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      overflow-x: hidden;
-      padding: 20px;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      padding: 0 20px;
     }
 
     header {
       position: absolute;
       top: 20px;
-      left: 20px;
-      right: 20px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       align-items: center;
-      gap: 10px;
-      z-index: 100;
-      background: var(--secondary);
-      padding: 10px 20px;
+      gap: 15px;
+      background: var(--secondary-color);
+      padding: 15px 30px;
       border-radius: 8px;
-      box-shadow: 0 2px 5px var(--shadow);
+      box-shadow: 0 5px 15px var(--shadow-color);
     }
 
-    header i {
-      font-size: 2rem;
-      color: var(--text);
+    header .icon {
+      font-size: 2.5rem;
+      color: var(--primary-color);
     }
 
     header h2 {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
+      color: var(--text-color);
       font-weight: 600;
-      color: var(--text);
     }
 
     .container {
-      max-width: var(--max-width);
       text-align: center;
-      margin-top: 100px;
+      background: var(--secondary-color);
+      border-radius: 8px;
+      padding: 40px 30px;
+      box-shadow: 0 5px 15px var(--shadow-color);
+      width: 100%;
+      max-width: 600px;
     }
 
     .input-field {
-      padding: 10px;
       width: 80%;
-      max-width: 400px;
-      background: var(--input-bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 5px;
-      margin-bottom: 15px;
+      max-width: 500px;
+      padding: 15px;
+      background: var(--input-bg-color);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .input-field:focus {
+      border-color: var(--primary-color);
+      outline: none;
     }
 
     .button {
-      padding: 10px 20px;
-      background: var(--secondary);
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      color: var(--text);
+      padding: 15px 30px;
+      background: var(--primary-color);
+      border: none;
+      border-radius: 6px;
+      color: var(--text-color);
+      font-size: 1.1rem;
       cursor: pointer;
       transition: background 0.3s ease;
+      width: 80%;
+      max-width: 500px;
     }
 
     .button:hover {
-      background: var(--border);
+      background: var(--button-hover-color);
     }
 
     .download-link {
       margin-top: 20px;
       font-size: 1.1rem;
-      color: var(--text);
+      color: var(--text-color);
       display: none;
     }
 
     .download-link a {
-      color: #1e90ff;
+      color: var(--highlight-color);
       text-decoration: none;
       font-weight: 600;
     }
@@ -112,40 +126,49 @@
 
     .warning {
       margin-top: 30px;
-      color: var(--text-light);
-      font-size: 0.9rem;
+      color: var(--text-color);
+      font-size: 0.95rem;
       max-width: 600px;
       margin: 0 auto;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .warning strong {
-      color: #ff6f61;
+      color: var(--primary-color);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: var(--text-color);
     }
   </style>
 </head>
 <body>
   <header>
-    <i class="fab fa-youtube"></i>
+    <i class="fab fa-youtube icon"></i>
     <h2>YouTube MP3 Downloader</h2>
   </header>
 
   <div class="container">
-    <input type="text" class="input-field" id="url" placeholder="Masukkan URL YouTube">
-    <button class="button" onclick="getYouTubeData()">Download</button>
+    <input type="text" class="input-field" id="url" placeholder="Masukkan URL YouTube" />
+    <button class="button" onclick="getYouTubeData()">Download MP3</button>
 
     <div class="download-link" id="download-link">
       <a href="#" id="download-btn" download>Download MP3</a>
     </div>
 
-    <!-- Penjelasan tentang penggunaan fitur -->
     <div class="warning">
-      <p><strong>Peringatan:</strong> Fitur ini bertujuan untuk membantu Anda mengunduh audio dari video YouTube untuk keperluan pribadi atau edukasi. Harap digunakan dengan bijak dan tidak disalahgunakan untuk mendistribusikan konten secara ilegal. Kami tidak bertanggung jawab atas penggunaan yang melanggar hak cipta atau kebijakan YouTube. Pastikan Anda mematuhi peraturan yang berlaku di wilayah Anda.</p>
+      <p><strong>Peringatan:</strong> Fitur ini dirancang untuk membantu Anda mengunduh audio dari video YouTube untuk keperluan pribadi atau edukasi. Harap digunakan dengan bijak dan tidak disalahgunakan untuk mendistribusikan konten secara ilegal. Kami tidak bertanggung jawab atas penggunaan yang melanggar hak cipta atau kebijakan YouTube. Pastikan Anda mematuhi peraturan yang berlaku di wilayah Anda.</p>
     </div>
   </div>
 
+  <div class="footer">
+    <p>&copy; 2025 YouTube MP3 Downloader | Semua Hak Dilindungi</p>
+  </div>
+
   <script>
-    // Function to validate URL and fetch MP3 data
     function getYouTubeData() {
       const url = document.getElementById("url").value.trim();
       const downloadLink = document.getElementById("download-link");
@@ -158,18 +181,16 @@
       if (youtubeRegex1.test(url) || youtubeRegex2.test(url) || youtubeRegex3.test(url)) {
         const videoId = RegExp.$1;
 
-        // Fetch data from API for MP3 download
         fetch(`https://api.siputzx.my.id/api/d/ytmp3?url=https://youtube.com/watch?v=${videoId}`)
           .then(response => response.json())
           .then(data => {
             if (data.status) {
-              // Show the download link
               downloadLink.style.display = "block";
               downloadBtn.href = data.data.dl;
               downloadBtn.textContent = `Download MP3: ${data.data.title}`;
             }
           })
-          .catch(err => alert("Error fetching data from API."));
+          .catch(err => alert("Terjadi kesalahan saat mengakses API."));
       } else {
         alert("URL tidak valid! Silakan masukkan URL YouTube yang valid.");
       }
