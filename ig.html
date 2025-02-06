@@ -5,30 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram Downloader</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: #f4f4f4;
+        :root {
+            --primary: #1e1e1e;
+            --secondary: #252525;
+            --text: #e5e5e5;
+            --text-light: #999999;
+            --border: #333333;
+            --shadow: rgba(0, 0, 0, 0.2);
+            --input-bg: #2e2e2e;
+            --max-width: 900px;
+        }
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
+
+        body {
+            background: var(--primary);
+            color: var(--text);
+            text-align: center;
+            padding: 20px;
+        }
+
         .container {
-            width: 90%;
-            max-width: 500px;
+            max-width: var(--max-width);
             margin: auto;
-            background: white;
+            background: var(--secondary);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 50px;
+            box-shadow: 0px 0px 10px var(--shadow);
         }
+
+        h2 {
+            margin-bottom: 15px;
+        }
+
         input {
             width: 80%;
             padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
+            border: 1px solid var(--border);
             border-radius: 5px;
+            background: var(--input-bg);
+            color: var(--text);
+            margin-bottom: 10px;
         }
+
         button {
             padding: 10px 20px;
             background: #28a745;
@@ -36,30 +60,46 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: 0.3s;
         }
+
+        button:hover {
+            background: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+
         .result img {
             width: 100%;
-            max-width: 300px;
+            max-width: 400px;
+            border-radius: 10px;
             margin-top: 10px;
-            border-radius: 5px;
         }
-        a {
-            display: block;
+
+        .download-btn {
+            display: inline-block;
             text-decoration: none;
             background: #007bff;
             color: white;
-            padding: 10px;
+            padding: 10px 20px;
             margin-top: 10px;
             border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Instagram Video Downloader</h2>
+        <h2>Instagram Video & Foto Downloader</h2>
         <input type="text" id="urlInput" placeholder="Masukkan URL Instagram" required>
         <button onclick="downloadInstagram()">Download</button>
-        <div id="result"></div>
+        <div id="result" class="result"></div>
     </div>
 
     <script>
@@ -80,9 +120,10 @@
                         resultDiv.innerHTML = "<h3>Hasil:</h3>";
 
                         data.data.forEach(item => {
+                            let fileType = item.url.includes(".mp4") ? "Video" : "Foto";
                             resultDiv.innerHTML += `
                                 <img src="${item.thumbnail}" alt="Thumbnail">
-                                <a href="${item.url}" download>Download Video</a>
+                                <a href="${item.url}" class="download-btn" download>Download ${fileType}</a>
                             `;
                         });
                     } else {
