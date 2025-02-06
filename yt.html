@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Downloader</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    :root {
+      --primary: #1e1e1e;
+      --secondary: #252525;
+      --text: #e5e5e5;
+      --text-light: #999999;
+      --border: #333333;
+      --shadow: rgba(0, 0, 0, 0.2);
+      --input-bg: #2e2e2e;
+      --max-width: 900px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--primary);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      padding: 20px;
+    }
+
+    /* Header */
+    header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+      background: var(--secondary);
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px var(--shadow);
+    }
+
+    header i {
+      font-size: 2rem;
+      color: var(--text);
+    }
+
+    header h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* URL Input Section */
+    .input-container {
+      margin-top: 100px;
+      text-align: center;
+      max-width: var(--max-width);
+    }
+
+    .input-container input {
+      width: 100%;
+      padding: 10px;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    .input-container button {
+      padding: 10px 20px;
+      background: var(--secondary);
+      border: none;
+      border-radius: 5px;
+      color: var(--text);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .input-container button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Thumbnail and Download Button */
+    .thumbnail-container {
+      text-align: center;
+      margin-top: 20px;
+      display: none; /* Initially hidden */
+    }
+
+    .thumbnail {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .download-btn {
+      padding: 12px 30px;
+      background: var(--secondary);
+      border: 2px solid transparent;
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: box-shadow 0.3s, transform 0.3s;
+      display: inline-block;
+    }
+
+    .download-btn:hover {
+      box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 60px;
+      font-size: 0.9rem;
+      color: var(--text-light);
+      opacity: 0.7;
+      text-align: center;
+      width: 100%;
+      padding: 20px;
+      background: var(--secondary);
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <i class="fab fa-youtube"></i>
+    <h2>YouTube Downloader</h2>
+  </header>
+
+  <!-- URL Input Section -->
+  <div class="input-container">
+    <input type="text" id="urlInput" placeholder="Paste YouTube URL here" />
+    <button onclick="fetchYouTubeData()">Get Download Links</button>
+  </div>
+
+  <!-- Thumbnail and Download Section -->
+  <div class="thumbnail-container" id="thumbnailContainer">
+    <h3>YouTube Video</h3>
+    <div id="videoTitle"></div>
+    <div>
+      <a id="downloadMP4" class="download-btn" href="#" download>Download MP4</a>
+    </div>
+    <div>
+      <a id="downloadMP3" class="download-btn" href="#" download>Download MP3</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>YouTube Downloader</p>
+  </div>
+
+  <script>
+    function fetchYouTubeData() {
+      const url = document.getElementById('urlInput').value;
+      if (!url) {
+        alert("Please enter a valid YouTube URL.");
+        return;
+      }
+
+      // Fetch MP4 Data
+      fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=${encodeURIComponent(url)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.status) {
+            const title = data.data.title;
+            const mp4DownloadLink = data.data.dl;
+
+            // Show video title and download link
+            document.getElementById('thumbnailContainer').style.display = 'block';
+            document.getElementById('videoTitle').textContent = title;
+            document.getElementById('downloadMP4').href = mp4DownloadLink;
+          } else {
+            alert("Invalid URL or YouTube video not found.");
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching YouTube MP4 data:", error);
+          alert("There was an error fetching the MP4 data.");
+        });
+
+      // Fetch MP3 Data
+      fetch(`https://api.siputzx.my.id/api/d/ytmp3?url=${encodeURIComponent(url)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.status) {
+            const mp3DownloadLink = data.data.dl;
+
+            // Update MP3 download link
+            document.getElementById('downloadMP3').href = mp3DownloadLink;
+          } else {
+            alert("Invalid URL or YouTube video not found.");
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching YouTube MP3 data:", error);
+          alert("There was an error fetching the MP3 data.");
+        });
+
+      // Fetch Alternative MP3 Data
+      fetch(`https://api.siputzx.my.id/api/dl/youtube/mp3?url=${encodeURIComponent(url)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.status) {
+            const mp3AltDownloadLink = data.data;
+
+            // Update MP3 download link from alternative API
+            document.getElementById('downloadMP3').href = mp3AltDownloadLink;
+          } else {
+            alert("Invalid URL or YouTube video not found.");
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching alternative MP3 data:", error);
+          alert("There was an error fetching the alternative MP3 data.");
+        });
+    }
+  </script>
+</body>
+</html>
