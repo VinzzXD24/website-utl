@@ -120,10 +120,10 @@
                         resultDiv.innerHTML = "<h3>Hasil:</h3>";
 
                         data.data.forEach(item => {
-                            let isVideo = item.url.includes(".mp4") || item.type === "video";
+                            let isVideo = item.url.includes(".mp4");
                             let mediaElement = isVideo 
                                 ? `<video class="media-preview" controls><source src="${item.url}" type="video/mp4">Browser tidak mendukung video.</video>`
-                                : `<img class="media-preview" src="${item.url}" alt="Thumbnail">`;
+                                : `<img class="media-preview" src="${item.url}" alt="Gambar">`;
 
                             let fileType = isVideo ? "Video" : "Foto";
 
