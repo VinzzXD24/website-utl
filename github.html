@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TikTok Downloader</title>
+  <title>GitHub Downloader</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
   <style>
     :root {
-      --primary-color: #ff3b30;
-      --background-color: #121212;
-      --secondary-color: #1a1a1a;
-      --highlight-color: #ff5722;
-      --border-color: #444444;
-      --text-color: #ffffff;
-      --input-bg-color: #2d2d2d;
-      --button-hover-color: #ff7043;
-      --shadow-color: rgba(0, 0, 0, 0.3);
+      --primary-color: #24292f; /* Warna GitHub */
+      --background-color: #f7f7f7;
+      --secondary-color: #ffffff;
+      --highlight-color: #2f363d;
+      --border-color: #d1d5da;
+      --text-color: #24292f;
+      --input-bg-color: #f4f6f8;
+      --button-hover-color: #2f363d;
+      --shadow-color: rgba(0, 0, 0, 0.1);
       --font-family: 'Poppins', sans-serif;
     }
 
@@ -52,7 +52,7 @@
 
     .icon {
       font-size: 2.2rem;
-      color: #00f1a1; /* Warna hijau khas TikTok */
+      color: var(--primary-color);
       animation: pulse 2s infinite;
     }
 
@@ -138,7 +138,7 @@
 
     .download-icon {
       font-size: 1.5rem;
-      color: var(--highlight-color);
+      color: var(--primary-color);
     }
 
     .warning {
@@ -152,20 +152,20 @@
     .warning p {
       line-height: 1.6;
       font-size: 0.9rem;
-      color: #cccccc;
+      color: #444444;
     }
 
     .copyright-warning {
       margin-top: 2rem;
       padding: 1.5rem;
       background: var(--input-bg-color);
-      border-left: 4px solid #ff3b30;
+      border-left: 4px solid #24292f;
       border-radius: 6px;
     }
 
     .copyright-warning p {
       font-size: 0.9rem;
-      color: #cccccc;
+      color: #444444;
       line-height: 1.6;
     }
 
@@ -212,51 +212,47 @@
 <body>
   <header>
     <div class="header-content">
-      <!-- Mengganti logo TikTok dengan GitHub -->
+      <!-- Logo GitHub berwarna putih -->
       <i class="fab fa-github icon" style="color: white;"></i>
-      <h2>TikTok Downloader</h2>
+      <h2>GitHub Downloader</h2>
     </div>
   </header>
 
   <div class="container">
     <div class="input-group">
-      <input type="text" class="input-field" id="tiktok-url" placeholder="Masukkan URL TikTok">
-      <button class="button" onclick="downloadVideo()">Download</button>
+      <input type="text" class="input-field" id="github-url" placeholder="Masukkan URL GitHub">
+      <button class="button" onclick="downloadFile()">Download</button>
     </div>
 
     <div class="download-section" id="download-section">
       <a href="#" class="download-link" id="download-link">
         <i class="fas fa-download download-icon"></i>
-        <span>Download Video</span>
+        <span>Download File</span>
       </a>
     </div>
 
     <div class="warning">
-      <p>Pastikan URL TikTok yang dimasukkan valid dan tersedia.</p>
+      <p>Pastikan URL GitHub yang dimasukkan valid dan tersedia.</p>
     </div>
 
     <div class="copyright-warning">
-      <p>Harap dicatat bahwa pengunduhan video TikTok tanpa izin dapat melanggar hak cipta dan ketentuan penggunaan TikTok. Pastikan Anda hanya mengunduh video yang tidak dilindungi hak cipta atau video yang Anda miliki haknya.</p>
+      <p>Harap dicatat bahwa pengunduhan file GitHub tanpa izin dapat melanggar hak cipta dan ketentuan penggunaan GitHub. Pastikan Anda hanya mengunduh file yang tidak dilindungi hak cipta atau file yang Anda miliki haknya.</p>
     </div>
   </div>
 
   <footer class="footer">
-    <p>&copy; 2025 TikTok Downloader | All Rights Reserved</p>
+    <p>&copy; 2025 GitHub Downloader | All Rights Reserved</p>
   </footer>
 
   <script>
-    function downloadVideo() {
-      const url = document.getElementById('tiktok-url').value;
-      fetch(`https://api.siputzx.my.id/api/tiktok?url=${url}`)
-        .then(response => response.json())
+    function downloadFile() {
+      const url = document.getElementById('github-url').value;
+      fetch(`https://api.github.com/repos/${url}/archive/refs/heads/main.zip`)
+        .then(response => response.blob())
         .then(data => {
-          if (data.status && data.data.success) {
-            const videoUrl = data.data.urls[0];
-            document.getElementById('download-section').style.display = 'block';
-            document.getElementById('download-link').href = videoUrl;
-          } else {
-            alert('URL tidak valid atau video tidak tersedia.');
-          }
+          const fileURL = URL.createObjectURL(data);
+          document.getElementById('download-section').style.display = 'block';
+          document.getElementById('download-link').href = fileURL;
         })
         .catch(error => {
           console.error('Error:', error);
