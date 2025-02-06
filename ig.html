@@ -216,7 +216,7 @@
             let url = document.getElementById("urlInput").value;
 
             // Validasi URL Instagram
-            const instagramRegex = /^(https?:\/\/)?(www\.)?(instagram\.com\/)([a-zA-Z0-9_]+\/)?(p\/[a-zA-Z0-9_-]+\/)?$/;
+            const instagramRegex = /^(https?:\/\/)?(www\.)?(instagram\.com\/)([a-zA-Z0-9_]+\/)?(p\/[a-zA-Z0-9_-]+)\/?(\?[\S]*)?$/;
             if (!url || !instagramRegex.test(url)) {
                 alert("Harap masukkan URL yang valid dari Instagram.");
                 return;
