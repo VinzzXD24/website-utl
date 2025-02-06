@@ -41,10 +41,8 @@
       position: absolute;
       top: 20px;
       left: 20px;
-      right: 20px;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
       gap: 10px;
       z-index: 100;
       background: var(--secondary);
@@ -62,6 +60,40 @@
       font-size: 1.4rem;
       font-weight: 600;
       color: var(--text);
+    }
+
+    /* URL Input Section */
+    .input-container {
+      margin-top: 100px;
+      text-align: center;
+      max-width: var(--max-width);
+    }
+
+    .input-container input {
+      width: 100%;
+      padding: 10px;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    .input-container button {
+      padding: 10px 20px;
+      background: var(--secondary);
+      border: none;
+      border-radius: 5px;
+      color: var(--text);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .input-container button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     }
 
     /* Thumbnail and Download Button */
@@ -115,6 +147,12 @@
     <h2>Instagram Downloader</h2>
   </header>
 
+  <!-- URL Input Section -->
+  <div class="input-container">
+    <input type="text" id="urlInput" placeholder="Paste Instagram URL here" />
+    <button onclick="fetchInstagramData()">Get Download Link</button>
+  </div>
+
   <!-- Thumbnail and Download Section -->
   <div class="thumbnail-container">
     <img id="thumbnail" class="thumbnail" src="" alt="Instagram Thumbnail" />
@@ -127,7 +165,13 @@
   </div>
 
   <script>
-    function fetchInstagramData(url) {
+    function fetchInstagramData() {
+      const url = document.getElementById('urlInput').value;
+      if (!url) {
+        alert("Please enter a valid Instagram URL.");
+        return;
+      }
+
       fetch(`https://api.siputzx.my.id/api/d/igdl?url=${encodeURIComponent(url)}`)
         .then(response => response.json())
         .then(data => {
@@ -145,10 +189,6 @@
           alert("There was an error fetching the data.");
         });
     }
-
-    // Example URL - replace with the input from the user
-    const instagramUrl = "https://www.instagram.com/p/DFpndLYS4Xh/?img_index=1&igsh=eW1vcGw0M3hnbnZo"; 
-    fetchInstagramData(instagramUrl);
   </script>
 </body>
 </html>
