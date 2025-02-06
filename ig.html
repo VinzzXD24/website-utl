@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instagram Downloader</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
     :root {
       --primary: #1e1e1e;
@@ -40,6 +41,7 @@
       position: absolute;
       top: 20px;
       left: 20px;
+      right: 20px;
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -52,192 +54,101 @@
     }
 
     header i {
-      font-size: 1.8rem;
+      font-size: 2rem;
       color: var(--text);
     }
 
     header h2 {
       font-size: 1.4rem;
       font-weight: 600;
-    }
-
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      max-width: var(--max-width);
-      margin-top: 100px;
-      padding: 20px;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      font-weight: 600;
-      line-height: 1.2;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 40px;
-      color: var(--text-light);
-      line-height: 1.5;
-    }
-
-    /* Form */
-    .input-container {
-      margin-bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .url-input {
-      width: 80%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background-color: var(--input-bg);
       color: var(--text);
-      font-size: 1rem;
-      margin-bottom: 20px;
     }
 
-    .url-input:focus {
-      outline: none;
-      border-color: var(--text);
-    }
-
-    .button {
-      padding: 10px 20px;
-      background: var(--secondary);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .button:hover {
-      background: var(--border);
-      border-color: var(--text);
-    }
-
-    .download-section {
-      display: none;
+    /* Thumbnail and Download Button */
+    .thumbnail-container {
       text-align: center;
-      margin-top: 30px;
-      align-items: center; /* Menjaga elemen di tengah */
+      margin-top: 20px;
     }
 
     .thumbnail {
-      max-width: 300px;
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
       margin-bottom: 20px;
     }
 
-    #downloadButton {
-      display: inline-block; /* Agar tombol berada di bawah thumbnail dan tidak meluas */
-      margin-top: 20px; /* Jarak antara tombol dan thumbnail */
-    }
-
-    /* Loading Animation */
-    .loading {
-      display: none;
+    .download-btn {
+      padding: 12px 30px;
+      background: var(--secondary);
+      border: 2px solid transparent;
+      border-radius: 8px;
       color: var(--text);
-      font-size: 1.5rem;
-      text-align: center;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: box-shadow 0.3s, transform 0.3s;
+      display: inline-block;
     }
 
-    .mission-completed {
-      display: none;
-      color: var(--text);
-      font-size: 1.5rem;
-      font-weight: bold;
-      text-align: center;
-      margin-top: 30px;
+    .download-btn:hover {
+      box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px);
     }
 
+    /* Footer */
+    .footer {
+      margin-top: 60px;
+      font-size: 0.9rem;
+      color: var(--text-light);
+      opacity: 0.7;
+      text-align: center;
+      width: 100%;
+      padding: 20px;
+      background: var(--secondary);
+      border-top: 1px solid var(--border);
+    }
   </style>
 </head>
 <body>
+  <!-- Header -->
+  <header>
+    <i class="fab fa-instagram"></i>
+    <h2>Instagram Downloader</h2>
+  </header>
 
-<header>
-  <i class="fas fa-download"></i>
-  <h2>Instagram Downloader</h2>
-</header>
-
-<div class="hero">
-  <h1>Download Instagram Photos & Videos</h1>
-  <p>Masukkan URL Instagram yang valid untuk mengunduh foto atau video.</p>
-
-  <div class="input-container">
-    <input type="text" id="urlInput" class="url-input" placeholder="Masukkan URL Instagram" />
-    <button class="button" id="downloadBtn">Download</button>
+  <!-- Thumbnail and Download Section -->
+  <div class="thumbnail-container">
+    <img id="thumbnail" class="thumbnail" src="" alt="Instagram Thumbnail" />
+    <a id="downloadBtn" class="download-btn" href="#" download>Download</a>
   </div>
 
-  <div class="loading" id="loading">
-    Sedang memuat... Mohon tunggu.
+  <!-- Footer -->
+  <div class="footer">
+    <p>Instagram Downloader</p>
   </div>
 
-  <div class="mission-completed" id="missionCompleted">
-    Misi Selesai!
-  </div>
-
-  <div class="download-section" id="downloadSection">
-    <img src="" id="thumbnail" class="thumbnail" alt="Thumbnail" />
-    <button class="button" id="downloadButton" onclick="downloadFile()">Download</button>
-  </div>
-</div>
-
-<script>
-  document.getElementById("downloadBtn").addEventListener("click", function() {
-    const url = document.getElementById("urlInput").value.trim();
-
-    // Validasi URL Instagram
-    const regexStandard = /^https:\/\/www\.instagram\.com\/p\/[a-zA-Z0-9-_]+\/$/;
-    const regexWithParams = /^https:\/\/www\.instagram\.com\/p\/[a-zA-Z0-9-_]+\/\?([a-zA-Z0-9-_]+=[a-zA-Z0-9-_]+&?)*/;
-
-    if (!regexStandard.test(url) && !regexWithParams.test(url)) {
-      alert("URL Instagram tidak valid!");
-      return;
+  <script>
+    function fetchInstagramData(url) {
+      fetch(`https://api.siputzx.my.id/api/d/igdl?url=${encodeURIComponent(url)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.status) {
+            const thumbnail = data.data[0].thumbnail;
+            const videoUrl = data.data[0].url;
+            document.getElementById('thumbnail').src = thumbnail;
+            document.getElementById('downloadBtn').href = videoUrl;
+          } else {
+            alert("Invalid URL or Instagram post not found.");
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching Instagram data:", error);
+          alert("There was an error fetching the data.");
+        });
     }
 
-    document.getElementById("loading").style.display = "block";
-    document.getElementById("missionCompleted").style.display = "none";
-    document.getElementById("downloadSection").style.display = "none";
-
-    const apiUrl = `https://api.siputzx.my.id/api/d/igdl?url=${encodeURIComponent(url)}`;
-
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        if (data.status) {
-          document.getElementById("loading").style.display = "none";
-          document.getElementById("missionCompleted").style.display = "block";
-          
-          const thumbnailUrl = data.data[0].thumbnail;
-          const downloadUrl = data.data[0].url;
-
-          document.getElementById("thumbnail").src = thumbnailUrl;
-          document.getElementById("downloadButton").setAttribute("href", downloadUrl);
-          document.getElementById("downloadSection").style.display = "block";
-        } else {
-          alert("Gagal mengambil data. Pastikan URL Instagram benar.");
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        alert("Terjadi kesalahan, coba lagi.");
-      });
-  });
-
-  function downloadFile() {
-    const downloadUrl = document.getElementById("downloadButton").getAttribute("href");
-    if (downloadUrl) {
-      window.location.href = downloadUrl;
-    }
-  }
-</script>
-
+    // Example URL - replace with the input from the user
+    const instagramUrl = "https://www.instagram.com/p/DFpndLYS4Xh/?img_index=1&igsh=eW1vcGw0M3hnbnZo"; 
+    fetchInstagramData(instagramUrl);
+  </script>
 </body>
 </html>
