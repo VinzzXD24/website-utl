@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,138 +35,31 @@
             padding: 20px;
         }
 
-        header {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            z-index: 100;
-            background: var(--secondary);
-            padding: 10px 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px var(--shadow);
-        }
-
-        header i {
-            font-size: 1.8rem;
-            color: var(--text);
-        }
-
-        header h2 {
-            font-size: 1.4rem;
-            font-weight: 600;
-        }
-
-        .hero {
+        /* Loading animation */
+        .loading-container {
             text-align: center;
-            max-width: var(--max-width);
-            margin-top: 100px;
-            padding: 20px;
+            display: none; /* Hide by default */
         }
 
-        .hero h1 {
-            font-size: 3rem;
+        .loading-text {
+            font-size: 1.5rem;
             margin-bottom: 20px;
-            font-weight: 600;
-            line-height: 1.2;
+            animation: loading 1.5s ease-in-out infinite;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            color: var(--text-light);
-            line-height: 1.5;
+        .loading-spinner {
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--text);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1.5s linear infinite;
         }
 
-        input {
-            width: 80%;
-            padding: 10px;
-            border: 1px solid var(--border);
-            border-radius: 5px;
-            background: var(--input-bg);
-            color: var(--text);
-            margin-bottom: 10px;
-        }
-
-        button {
-            padding: 10px 20px;
-            background: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: #218838;
-        }
-
-        .result {
-            margin-top: 20px;
-        }
-
-        .media-preview {
-            width: 100%;
-            max-width: 500px;
-            border-radius: 10px;
-            margin-top: 10px;
-        }
-
-        video {
-            width: 100%;
-            max-width: 500px;
-            border-radius: 10px;
-        }
-
-        .thumbnail {
-            width: 100%;
-            max-width: 300px;
-            border-radius: 10px;
-            margin-top: 10px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .download-btn {
-            display: inline-block;
-            text-decoration: none;
-            background: #007bff;
-            color: white;
-            padding: 10px 20px;
-            margin-top: 10px;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-
-        .download-btn:hover {
-            background: #0056b3;
-        }
-
-        .footer {
-            margin-top: 60px;
-            font-size: 0.9rem;
-            color: var(--text-light);
-            opacity: 0.7;
-            text-align: center;
-            width: 100%;
-            padding: 20px;
-            background: var(--secondary);
-            border-top: 1px solid var(--border);
-        }
-
-        .loading {
-            display: none;
-            font-size: 1.2rem;
-            color: #f1f1f1;
-            font-weight: bold;
-            margin-top: 20px;
-            animation: spin 2s linear infinite;
+        @keyframes loading {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
         }
 
         @keyframes spin {
@@ -174,90 +67,137 @@
             100% { transform: rotate(360deg); }
         }
 
-        @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+        /* Mission Completed */
+        .completed-container {
+            display: none; /* Hide by default */
+            text-align: center;
+            color: #00c853;
+        }
 
-            .hero p {
-                font-size: 1rem;
-            }
+        .completed-text {
+            font-size: 2rem;
+            font-weight: bold;
+            animation: fadeIn 2s ease-out;
+        }
 
-            header {
-                top: 10px;
-                left: 10px;
-                right: 10px;
-            }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Main Content */
+        .content {
+            text-align: center;
+            max-width: var(--max-width);
+        }
+
+        .button {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #00c853;
+            border: none;
+            border-radius: 5px;
+            color: var(--text);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #028c4a;
+        }
+
+        /* Link input style */
+        input {
+            padding: 10px;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            background-color: var(--input-bg);
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .thumbnail-container {
+            margin-top: 20px;
+        }
+
+        .thumbnail img {
+            max-width: 300px;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h2>Instagram Downloader</h2>
-    </header>
+    <div class="content">
+        <h1>Instagram Downloader</h1>
+        <p>Enter the URL of the Instagram post to download:</p>
+        <input type="text" id="urlInput" placeholder="Paste Instagram URL here">
+        <button class="button" onclick="startLoading()">Check URL</button>
 
-    <div class="hero">
-        <h1>Download Instagram Media</h1>
-        <p>Masukkan URL dari Instagram untuk mengunduh gambar atau video.</p>
-        <input type="text" id="urlInput" placeholder="Masukkan URL Instagram" required>
-        <button onclick="downloadInstagram()">Download</button>
+        <!-- Loading animation -->
+        <div class="loading-container" id="loadingContainer">
+            <p class="loading-text">Checking URL...</p>
+            <div class="loading-spinner"></div>
+        </div>
 
-        <div id="loading" class="loading">Memeriksa URL...</div>
-    </div>
+        <!-- Mission Completed -->
+        <div class="completed-container" id="completedContainer">
+            <p class="completed-text">Mission Completed!</p>
+        </div>
 
-    <div id="result" class="result"></div>
-
-    <div class="footer">
-        <p>&copy; 2025 Instagram Downloader</p>
+        <!-- Thumbnail Display -->
+        <div class="thumbnail-container" id="thumbnailContainer" style="display:none;">
+            <h2>Preview:</h2>
+            <div class="thumbnail" id="thumbnail"></div>
+            <a id="downloadLink" class="button" style="display: none;">Download</a>
+        </div>
     </div>
 
     <script>
-        function downloadInstagram() {
-            let url = document.getElementById("urlInput").value;
+        // Function to validate Instagram URL using regex
+        function isInstagramUrl(url) {
+            const regex = /^(https:\/\/www\.instagram\.com\/p\/[a-zA-Z0-9-_]+\/\?igsh=[\w-]+)$/;
+            return regex.test(url);
+        }
 
-            // Validasi URL Instagram
-            const instagramRegex = /^(https?:\/\/)?(www\.)?(instagram\.com\/)([a-zA-Z0-9_]+\/)?(p\/[a-zA-Z0-9_-]+)\/?(\?[\S]*)?$/;
-            if (!url || !instagramRegex.test(url)) {
-                alert("Harap masukkan URL yang valid dari Instagram.");
-                return;
+        // Function to simulate the loading process
+        function startLoading() {
+            const urlInput = document.getElementById('urlInput').value;
+            if (isInstagramUrl(urlInput)) {
+                document.getElementById('loadingContainer').style.display = 'block';
+                document.getElementById('completedContainer').style.display = 'none';
+
+                // Simulate the URL checking and fetching process (replace with real API)
+                setTimeout(() => {
+                    document.getElementById('loadingContainer').style.display = 'none';
+                    document.getElementById('completedContainer').style.display = 'block';
+
+                    // Display a mock thumbnail and download button
+                    displayThumbnail(urlInput);
+                }, 3000); // Simulate 3 seconds delay
+            } else {
+                alert('Please enter a valid Instagram post URL');
             }
+        }
 
-            document.getElementById("loading").style.display = "block"; // Menampilkan animasi loading
+        // Display the thumbnail and download link (mockup for demo purposes)
+        function displayThumbnail(url) {
+            const thumbnailContainer = document.getElementById('thumbnailContainer');
+            const thumbnailElement = document.getElementById('thumbnail');
+            const downloadLink = document.getElementById('downloadLink');
 
-            let apiUrl = `https://api.siputzx.my.id/api/d/igdl?url=${encodeURIComponent(url)}`;
+            // Replace with actual API call to fetch media (image or video)
+            const thumbnailUrl = "https://via.placeholder.com/300"; // Placeholder for thumbnail image
+            const downloadUrl = url; // In a real application, use the fetched media URL
 
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById("loading").style.display = "none"; // Menyembunyikan animasi loading
+            // Set thumbnail image
+            thumbnailElement.innerHTML = `<img src="${thumbnailUrl}" alt="Instagram thumbnail">`;
 
-                    if (data.status) {
-                        let resultDiv = document.getElementById("result");
-                        resultDiv.innerHTML = "<h3>Hasil:</h3>";
-
-                        data.data.forEach(item => {
-                            let isVideo = item.url.includes(".mp4");
-
-                            let thumbnail = item.thumbnail ? `<img class="thumbnail" src="${item.thumbnail}" alt="Thumbnail">` : '';
-                            let mediaElement = isVideo 
-                                ? `<video controls><source src="${item.url}" type="video/mp4">Browser tidak mendukung video.</video>`
-                                : `<img class="media-preview" src="${item.url}" alt="Media">`;
-
-                            resultDiv.innerHTML += `
-                                ${thumbnail}
-                                ${mediaElement}
-                                <a href="${item.url}" class="download-btn" download>Download</a>
-                            `;
-                        });
-                    } else {
-                        alert("Terjadi kesalahan, periksa URL yang dimasukkan.");
-                    }
-                })
-                .catch(error => {
-                    document.getElementById("loading").style.display = "none"; // Menyembunyikan animasi loading
-                    alert("Gagal mengambil data dari API.");
-                    console.error(error);
-                });
+            // Set download link
+            downloadLink.href = downloadUrl;
+            downloadLink.download = "instagram_media";
+            downloadLink.style.display = 'inline-block'; // Show download button
         }
     </script>
 </body>
