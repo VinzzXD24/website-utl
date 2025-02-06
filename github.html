@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #0077b5;
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #005f8f;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Download Gist from GitHub</h1>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Pinterest-logo.svg/1200px-Pinterest-logo.svg.png" alt="Pinterest Logo" class="logo">
+        <input type="text" id="gistUrl" placeholder="Enter Gist URL" />
+        <button onclick="downloadGist()">Download Gist</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function downloadGist() {
+            const gistUrl = document.getElementById('gistUrl').value;
+            const apiUrl = `https://api.siputzx.my.id/api/d/github?url=${gistUrl}`;
+            
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.files && data.files.length > 0) {
+                    const file = data.files[0];
+                    const fileUrl = file.raw_url;
+                    const fileName = file.name;
+
+                    const link = document.createElement('a');
+                    link.href = fileUrl;
+                    link.download = fileName;
+                    link.click();
+                    
+                    document.getElementById('result').innerHTML = `Downloading ${fileName}...`;
+                } else {
+                    document.getElementById('result').innerHTML = 'No files found in this Gist.';
+                }
+            } catch (error) {
+                document.getElementById('result').innerHTML = 'Error occurred. Please try again.';
+            }
+        }
+    </script>
+
+</body>
+</html>
