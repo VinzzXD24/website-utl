@@ -39,51 +39,52 @@
     }
 
     header {
-      padding: 1rem 1.5rem;
+      padding: 1.5rem;
       background: var(--secondary-color);
       box-shadow: 0 4px 15px var(--shadow-color);
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      gap: 0.8rem;
+      gap: 1rem;
     }
 
     /* Logo YouTube di kiri header */
     .logo i {
-      font-size: 1.8rem;
+      font-size: 2rem;
       color: var(--primary-color);
       animation: pulse 1.5s infinite;
     }
 
     h2 {
-      font-size: 1.2rem; /* Ukuran teks diperkecil */
-      font-weight: 500;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
       color: var(--text-color);
-      margin: 0;
     }
 
     .container {
       flex: 1;
       max-width: 800px;
       margin: 0 auto;
-      padding: 1.5rem;
+      padding: 2rem;
       width: 90%;
     }
 
     .input-group {
-      margin: 1.5rem 0;
+      margin: 2rem 0;
       position: relative;
     }
 
     .input-field {
       width: 100%;
-      padding: 1rem;
+      padding: 1.2rem;
       background: var(--input-bg-color);
       border: 2px solid var(--border-color);
       color: var(--text-color);
-      border-radius: 6px;
-      font-size: 0.9rem;
-      padding-right: 120px;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      padding-right: 140px;
     }
 
     .input-field:focus {
@@ -97,12 +98,12 @@
       right: 5px;
       top: 50%;
       transform: translateY(-50%);
-      padding: 0.7rem 1.2rem;
+      padding: 0.8rem 1.5rem;
       background: var(--primary-color);
       border: none;
       border-radius: 6px;
       color: var(--text-color);
-      font-size: 0.9rem;
+      font-size: 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
     }
@@ -113,63 +114,52 @@
     }
 
     .download-section {
-      margin-top: 1.5rem;
+      margin-top: 2rem;
       background: var(--input-bg-color);
-      padding: 1rem;
-      border-radius: 6px;
+      padding: 1.5rem;
+      border-radius: 8px;
       display: none;
       animation: fadeIn 0.5s ease;
-      text-align: center;
     }
 
     .download-link {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 0.8rem;
+      gap: 1rem;
       color: var(--text-color);
       text-decoration: none;
       transition: transform 0.3s ease;
     }
 
     .download-link:hover {
-      transform: translateX(8px);
+      transform: translateX(10px);
     }
 
     .download-icon {
-      font-size: 1.2rem;
+      font-size: 1.5rem;
       color: var(--highlight-color);
     }
 
-    /* Teks tambahan di bawah tombol download */
-    .info-text {
-      margin-top: 0.8rem;
-      font-size: 0.8rem;
-      color: #cccccc;
-      text-align: center;
-    }
-
     .warning {
-      margin-top: 1.5rem;
-      padding: 1rem;
+      margin-top: 2rem;
+      padding: 1.5rem;
       background: var(--input-bg-color);
       border-left: 4px solid var(--primary-color);
       border-radius: 6px;
     }
 
     .warning p {
-      line-height: 1.5;
-      font-size: 0.8rem;
+      line-height: 1.6;
+      font-size: 0.9rem;
       color: #cccccc;
     }
 
     .footer {
       text-align: center;
-      padding: 1.2rem;
+      padding: 1.5rem;
       background: var(--secondary-color);
       margin-top: auto;
       border-top: 1px solid var(--border-color);
-      font-size: 0.8rem;
     }
 
     @keyframes pulse {
@@ -188,7 +178,7 @@
         padding: 1rem;
         width: 95%;
       }
-
+      
       .button {
         position: relative;
         width: 100%;
@@ -197,9 +187,9 @@
         right: auto;
         top: auto;
       }
-
+      
       .input-field {
-        padding-right: 1rem;
+        padding-right: 1.2rem;
       }
     }
   </style>
