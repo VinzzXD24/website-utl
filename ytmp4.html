@@ -94,29 +94,29 @@
     }
 
     .button {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 0.8rem 1.5rem;
-  background: var(--primary-color);
-  border: none;
-  border-radius: 6px;
-  color: var(--text-color);
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 0.8rem 1.5rem;
+      background: var(--primary-color);
+      border: none;
+      border-radius: 6px;
+      color: var(--text-color);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
 
-.button:hover {
-  background: var(--button-hover-color);
-  transform: translateY(-50%) scale(1.05);
-}
+    .button:hover {
+      background: var(--button-hover-color);
+      transform: translateY(-50%) scale(1.05);
+    }
 
-.button:active {
-  transform: translateY(-50%) scale(1); /* Prevent scaling or shifting */
-}
-
+    .button:active {
+      top: 50%; /* Maintain position on click */
+      transform: translateY(-50%) scale(1); /* Keep scale unchanged */
+    }
 
     .download-section {
       margin-top: 2rem;
