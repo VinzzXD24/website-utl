@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pinterest Downloader</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     :root {
       --primary-color: #E60023;
@@ -33,59 +33,34 @@
       flex-direction: column;
       min-height: 100vh;
       overflow-x: hidden;
-    }
-
-    header {
-      padding: 1.5rem;
-      text-align: center;
-      background: var(--secondary-color);
-      box-shadow: 0 4px 15px var(--shadow-color);
-      margin-bottom: 2rem;
-    }
-
-    .header-content {
-      display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
-    }
-
-    .icon {
-      font-size: 2.2rem;
-      color: #E60023;
-      animation: pulse 2s infinite;
-    }
-
-    h2 {
-      font-size: 1.8rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      color: var(--text-color);
     }
 
     .container {
-      flex: 1;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem;
+      max-width: 600px;
       width: 90%;
+      padding: 2rem;
+      background: var(--secondary-color);
+      border-radius: 10px;
+      box-shadow: 0px 4px 15px var(--shadow-color);
     }
 
     .input-group {
-      margin: 2rem 0;
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
 
     .input-field {
       width: 100%;
-      padding: 1.2rem;
+      padding: 1rem;
       background: var(--input-bg-color);
       border: 2px solid var(--border-color);
       color: var(--text-color);
       border-radius: 8px;
       font-size: 1rem;
       transition: all 0.3s ease;
-      padding-right: 140px;
     }
 
     .input-field:focus {
@@ -95,128 +70,52 @@
     }
 
     .button {
-      position: absolute;
-      right: 5px;
-      top: 50%;
-      transform: translateY(-50%);
-      padding: 0.8rem 1.5rem;
+      width: 100%;
+      padding: 1rem;
       background: var(--primary-color);
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       color: var(--text-color);
       font-size: 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
+      text-align: center;
+      font-weight: bold;
     }
 
     .button:hover {
       background: var(--button-hover-color);
-      transform: translateY(-50%) scale(1.05);
     }
 
     .download-section {
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      margin-top: 1rem;
+      padding: 1rem;
       background: var(--input-bg-color);
-      padding: 1.5rem;
       border-radius: 8px;
-      margin-top: 2rem;
-    }
-
-    .download-section.show {
-      opacity: 1;
-      visibility: visible;
+      display: none;
     }
 
     .download-link {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      color: var(--text-color);
+      justify-content: center;
+      gap: 0.5rem;
       text-decoration: none;
-      transition: transform 0.3s ease;
+      color: var(--text-color);
+      font-weight: bold;
     }
 
     .download-link:hover {
-      transform: translateX(10px);
+      color: var(--highlight-color);
     }
 
     .download-icon {
       font-size: 1.5rem;
       color: var(--highlight-color);
     }
-
-    .warning {
-      margin-top: 2rem;
-      padding: 1.5rem;
-      background: var(--input-bg-color);
-      border-left: 4px solid var(--primary-color);
-      border-radius: 6px;
-    }
-
-    .warning p {
-      line-height: 1.6;
-      font-size: 0.9rem;
-      color: #cccccc;
-    }
-
-    .copyright-warning {
-      margin-top: 2rem;
-      padding: 1.5rem;
-      background: var(--input-bg-color);
-      border-left: 4px solid #ff3b30;
-      border-radius: 6px;
-    }
-
-    .copyright-warning p {
-      font-size: 0.9rem;
-      color: #cccccc;
-      line-height: 1.6;
-    }
-
-    .footer {
-      text-align: center;
-      padding: 1.5rem;
-      background: var(--secondary-color);
-      margin-top: auto;
-      border-top: 1px solid var(--border-color);
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 1rem;
-        width: 95%;
-      }
-      
-      .button {
-        position: relative;
-        width: 100%;
-        margin-top: 1rem;
-        transform: none;
-        right: auto;
-        top: auto;
-      }
-      
-      .input-field {
-        padding-right: 1.2rem;
-      }
-    }
   </style>
 </head>
 <body>
-  <header>
-    <div class="header-content">
-      <i class="fab fa-pinterest icon"></i>
-      <h2>Pinterest Downloader</h2>
-    </div>
-  </header>
 
   <div class="container">
     <div class="input-group">
@@ -227,34 +126,25 @@
     <div class="download-section" id="download-section">
       <a href="#" class="download-link" id="download-link">
         <i class="fas fa-download download-icon"></i>
-        <span>Download</span>
+        <span>Download Video</span>
       </a>
-    </div>
-
-    <div class="warning">
-      <p>Masukkan URL Pin Pinterest yang valid untuk mendapatkan hasilnya.</p>
-    </div>
-
-    <div class="copyright-warning">
-      <p>Harap dicatat bahwa unduhan konten tanpa izin dapat melanggar hak cipta dan ketentuan penggunaan Pinterest. Gunakan hanya konten yang Anda miliki haknya.</p>
     </div>
   </div>
 
-  <footer class="footer">
-    <p>&copy; 2025 Pinterest Downloader | All Rights Reserved</p>
-  </footer>
-
   <script>
-    function downloadPinterest(event) {
-      if (event) event.preventDefault(); 
-
+    function downloadPinterest() {
       const url = document.getElementById('pinterest-url').value;
+      if (!url) {
+        alert("Masukkan URL terlebih dahulu.");
+        return;
+      }
+
       fetch(`https://api.siputzx.my.id/api/d/pinterest?url=${url}`)
         .then(response => response.json())
         .then(data => {
           if (data.status) {
             document.getElementById('download-link').href = data.data.url;
-            document.getElementById('download-section').classList.add('show');
+            document.getElementById('download-section').style.display = "block";
           } else {
             alert('Video tidak ditemukan atau ada kesalahan.');
           }
@@ -264,5 +154,6 @@
         });
     }
   </script>
+
 </body>
 </html>
