@@ -95,24 +95,27 @@
     }
 
     .button {
-      position: absolute;
-      right: 5px;
-      top: 50%;
-      transform: translateY(-50%);
-      padding: 0.8rem 1.5rem;
-      background: var(--primary-color);
-      border: none;
-      border-radius: 6px;
-      color: var(--text-color);
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.8rem 1.5rem;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 6px;
+  color: var(--text-color);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap; /* Menjaga tombol tetap pada ukuran aslinya */
+}
 
-    .button:hover {
-      background: var(--button-hover-color);
-      transform: translateY(-50%) scale(1.05);
-    }
+.button:hover {
+  background: var(--button-hover-color);
+  /* Hilangkan transformasi pembesaran */
+  box-shadow: 0 0 10px rgba(255, 59, 48, 0.3); /* Tambahkan efek bayangan untuk hover */
+}
+
 
     .download-section {
       margin-top: 2rem;
