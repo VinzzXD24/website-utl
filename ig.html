@@ -160,6 +160,20 @@
             border-top: 1px solid var(--border);
         }
 
+        .loading {
+            display: none;
+            font-size: 1.2rem;
+            color: #f1f1f1;
+            font-weight: bold;
+            margin-top: 20px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         @media (max-width: 600px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -187,6 +201,8 @@
         <p>Masukkan URL dari Instagram untuk mengunduh gambar atau video.</p>
         <input type="text" id="urlInput" placeholder="Masukkan URL Instagram" required>
         <button onclick="downloadInstagram()">Download</button>
+
+        <div id="loading" class="loading">Memeriksa URL...</div>
     </div>
 
     <div id="result" class="result"></div>
@@ -198,16 +214,23 @@
     <script>
         function downloadInstagram() {
             let url = document.getElementById("urlInput").value;
-            if (!url) {
-                alert("Masukkan URL Instagram!");
+
+            // Validasi URL Instagram
+            const instagramRegex = /^(https?:\/\/)?(www\.)?(instagram\.com\/)([a-zA-Z0-9_]+\/)?(p\/[a-zA-Z0-9_-]+\/)?$/;
+            if (!url || !instagramRegex.test(url)) {
+                alert("Harap masukkan URL yang valid dari Instagram.");
                 return;
             }
+
+            document.getElementById("loading").style.display = "block"; // Menampilkan animasi loading
 
             let apiUrl = `https://api.siputzx.my.id/api/d/igdl?url=${encodeURIComponent(url)}`;
 
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
+                    document.getElementById("loading").style.display = "none"; // Menyembunyikan animasi loading
+
                     if (data.status) {
                         let resultDiv = document.getElementById("result");
                         resultDiv.innerHTML = "<h3>Hasil:</h3>";
@@ -215,14 +238,11 @@
                         data.data.forEach(item => {
                             let isVideo = item.url.includes(".mp4");
 
-                            // Menampilkan thumbnail jika ada
                             let thumbnail = item.thumbnail ? `<img class="thumbnail" src="${item.thumbnail}" alt="Thumbnail">` : '';
-
                             let mediaElement = isVideo 
                                 ? `<video controls><source src="${item.url}" type="video/mp4">Browser tidak mendukung video.</video>`
                                 : `<img class="media-preview" src="${item.url}" alt="Media">`;
 
-                            // Menambahkan thumbnail di atas media dan tombol download
                             resultDiv.innerHTML += `
                                 ${thumbnail}
                                 ${mediaElement}
@@ -234,6 +254,7 @@
                     }
                 })
                 .catch(error => {
+                    document.getElementById("loading").style.display = "none"; // Menyembunyikan animasi loading
                     alert("Gagal mengambil data dari API.");
                     console.error(error);
                 });
