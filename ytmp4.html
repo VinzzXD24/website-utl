@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YouTube MP4 Downloader</title>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
   <style>
     :root {
       --primary-color: #ff3b30;
@@ -34,6 +38,18 @@
       overflow-x: hidden;
     }
 
+    /* Logo YouTube */
+    .logo {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .logo i {
+      font-size: 4rem;
+      color: var(--primary-color);
+      animation: pulse 1.5s infinite;
+    }
+
     header {
       padding: 1.5rem;
       text-align: center;
@@ -45,6 +61,7 @@
     h2 {
       font-size: 1.8rem;
       font-weight: 600;
+      letter-spacing: 0.5px;
       color: var(--text-color);
     }
 
@@ -70,6 +87,7 @@
       border-radius: 8px;
       font-size: 1rem;
       transition: all 0.3s ease;
+      padding-right: 140px;
     }
 
     .input-field:focus {
@@ -79,9 +97,11 @@
     }
 
     .button {
-      width: 100%;
-      margin-top: 1rem;
-      padding: 1rem;
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 0.8rem 1.5rem;
       background: var(--primary-color);
       border: none;
       border-radius: 6px;
@@ -93,7 +113,7 @@
 
     .button:hover {
       background: var(--button-hover-color);
-      transform: scale(1.05);
+      transform: translateY(-50%) scale(1.05);
     }
 
     .download-section {
@@ -103,11 +123,13 @@
       border-radius: 8px;
       display: none;
       animation: fadeIn 0.5s ease;
+      text-align: center;
     }
 
     .download-link {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 1rem;
       color: var(--text-color);
       text-decoration: none;
@@ -121,6 +143,14 @@
     .download-icon {
       font-size: 1.5rem;
       color: var(--highlight-color);
+    }
+
+    /* Teks tambahan di bawah tombol download */
+    .info-text {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #cccccc;
+      text-align: center;
     }
 
     .warning {
@@ -145,6 +175,12 @@
       border-top: 1px solid var(--border-color);
     }
 
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -155,10 +191,29 @@
         padding: 1rem;
         width: 95%;
       }
+      
+      .button {
+        position: relative;
+        width: 100%;
+        margin-top: 1rem;
+        transform: none;
+        right: auto;
+        top: auto;
+      }
+      
+      .input-field {
+        padding-right: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
+
+  <!-- Logo YouTube -->
+  <div class="logo">
+    <i class="fab fa-youtube"></i>
+  </div>
+
   <header>
     <h2>YouTube MP4 Downloader</h2>
   </header>
@@ -166,45 +221,49 @@
   <div class="container">
     <div class="input-group">
       <input type="text" class="input-field" id="url" placeholder="Masukkan URL YouTube">
+      <button class="button" onclick="getYouTubeData()">Download</button>
     </div>
-    <button class="button" onclick="getYouTubeData()">Download</button>
 
     <div class="download-section" id="download-section">
-      <img id="thumbnail-img" src="" alt="Thumbnail" style="width: 100%; border-radius: 8px; margin-bottom: 10px;">
-      <a id="download-link" class="download-link" href="#" target="_blank">
-        <span class="download-icon">⬇</span> Download Video
+      <a href="#" id="download-link" class="download-link">
+        <i class="fas fa-download download-icon"></i> Download Video
       </a>
+      <p class="info-text">Klik tombol di atas untuk mengunduh video dalam kualitas terbaik.</p>
+    </div>
+
+    <div class="warning">
+      <p>Gunakan layanan ini secara bertanggung jawab. Hindari mengunduh konten berhak cipta tanpa izin.</p>
     </div>
   </div>
+
+  <footer class="footer">
+    &copy; 2025 YouTube Downloader | Dibuat oleh Vinzz Official
+  </footer>
 
   <script>
     function getYouTubeData() {
       const url = document.getElementById("url").value.trim();
       const downloadSection = document.getElementById("download-section");
-      const thumbnailImg = document.getElementById("thumbnail-img");
       const downloadLink = document.getElementById("download-link");
 
-      const youtubeRegex = /^(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.)?youtube\.com\/(?:watch\?v=|embed\/|v\/))([a-zA-Z0-9_-]{11})/;
-      
-      if (youtubeRegex.test(url)) {
-        const videoId = RegExp.$1;
-        
-        fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=https://youtube.com/watch?v=${videoId}`)
-          .then(response => response.json())
-          .then(data => {
-            if (data.status) {
-              thumbnailImg.src = data.data.thumbnail;
-              downloadLink.href = data.data.dl;
-              downloadSection.style.display = "block";
-            } else {
-              alert("Gagal mengambil data video!");
-            }
-          })
-          .catch(() => alert("Terjadi kesalahan saat mengambil data video."));
-      } else {
-        alert("URL tidak valid! Masukkan URL YouTube yang benar.");
+      if (url === "") {
+        alert("Masukkan URL YouTube yang valid!");
+        return;
       }
+
+      fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=${encodeURIComponent(url)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.status) {
+            downloadSection.style.display = "block";
+            downloadLink.href = data.data.dl;
+          } else {
+            alert("Gagal mengambil data video!");
+          }
+        })
+        .catch(() => alert("Terjadi kesalahan saat mengambil data."));
     }
   </script>
+
 </body>
 </html>
