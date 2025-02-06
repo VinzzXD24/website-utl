@@ -40,10 +40,9 @@
       position: absolute;
       top: 20px;
       left: 20px;
-      right: 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
       gap: 10px;
       z-index: 100;
       background: var(--secondary);
@@ -207,14 +206,22 @@
       document.getElementById("missionCompleted").style.display = "block";
 
       // Simulasi thumbnail dan URL download
-      document.getElementById("thumbnail").src = "https://via.placeholder.com/300"; // Gantilah ini dengan gambar thumbnail yang sesuai
+      const thumbnailUrl = "https://via.placeholder.com/300"; // Gantilah ini dengan gambar thumbnail yang sesuai
+      document.getElementById("thumbnail").src = thumbnailUrl;
+
+      // Tambahkan link download di sini
+      const downloadUrl = "https://via.placeholder.com/300"; // Gantilah dengan URL file yang sesuai
+      document.getElementById("downloadButton").setAttribute("href", downloadUrl);
       document.getElementById("downloadSection").style.display = "block";
     }, 2000); // Simulasi delay
   });
 
-  document.getElementById("downloadButton").addEventListener("click", function() {
-    alert("Mulai mengunduh...");
-    // Di sini tambahkan logic untuk mengunduh file (misalnya dengan mengakses API Instagram)
+  document.getElementById("downloadButton").addEventListener("click", function(e) {
+    e.preventDefault(); // Prevents default behavior to handle the download logic here
+    const downloadUrl = document.getElementById("downloadButton").getAttribute("href");
+    if (downloadUrl) {
+      window.location.href = downloadUrl; // This triggers the download
+    }
   });
 </script>
 
