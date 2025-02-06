@@ -100,6 +100,7 @@
     .thumbnail-container {
       text-align: center;
       margin-top: 20px;
+      display: none; /* Initially hidden */
     }
 
     .thumbnail {
@@ -154,7 +155,8 @@
   </div>
 
   <!-- Thumbnail and Download Section -->
-  <div class="thumbnail-container">
+  <div class="thumbnail-container" id="thumbnailContainer">
+    <h3>Instagram Thumbnail</h3>
     <img id="thumbnail" class="thumbnail" src="" alt="Instagram Thumbnail" />
     <a id="downloadBtn" class="download-btn" href="#" download>Download</a>
   </div>
@@ -178,6 +180,9 @@
           if (data.status) {
             const thumbnail = data.data[0].thumbnail;
             const videoUrl = data.data[0].url;
+
+            // Display thumbnail and download section
+            document.getElementById('thumbnailContainer').style.display = 'block';
             document.getElementById('thumbnail').src = thumbnail;
             document.getElementById('downloadBtn').href = videoUrl;
           } else {
