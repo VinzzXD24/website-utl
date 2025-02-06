@@ -38,24 +38,20 @@
       overflow-x: hidden;
     }
 
-    /* Logo YouTube */
-    .logo {
-      text-align: center;
-      margin-top: 1rem;
-    }
-
-    .logo i {
-      font-size: 4rem;
-      color: var(--primary-color);
-      animation: pulse 1.5s infinite;
-    }
-
     header {
-      padding: 1.5rem;
-      text-align: center;
+      padding: 1rem 1.5rem;
       background: var(--secondary-color);
       box-shadow: 0 4px 15px var(--shadow-color);
-      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* Logo YouTube di kiri header */
+    .logo i {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      animation: pulse 1.5s infinite;
     }
 
     h2 {
@@ -191,7 +187,13 @@
         padding: 1rem;
         width: 95%;
       }
-      
+
+      header {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+      }
+
       .button {
         position: relative;
         width: 100%;
@@ -200,7 +202,7 @@
         right: auto;
         top: auto;
       }
-      
+
       .input-field {
         padding-right: 1.2rem;
       }
@@ -209,12 +211,11 @@
 </head>
 <body>
 
-  <!-- Logo YouTube -->
-  <div class="logo">
-    <i class="fab fa-youtube"></i>
-  </div>
-
   <header>
+    <!-- Logo YouTube di kiri -->
+    <div class="logo">
+      <i class="fab fa-youtube"></i>
+    </div>
     <h2>YouTube MP4 Downloader</h2>
   </header>
 
