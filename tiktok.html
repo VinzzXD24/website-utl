@@ -71,7 +71,7 @@
       width: 90%;
     }
     
-    /* Mengatur input-group sebagai kolom */
+    /* Gunakan flex dengan kolom untuk input dan tombol */
     .input-group {
       margin: 2rem 0;
       display: flex;
@@ -96,8 +96,9 @@
       outline: none;
     }
     
-    /* Tombol Download ditempatkan di bawah input, tanpa posisi absolut */
+    /* Tombol Download dengan lebar penuh agar tidak kecil */
     .button {
+      width: 100%;
       padding: 0.8rem 1.5rem;
       background: var(--primary-color);
       border: none;
@@ -107,8 +108,6 @@
       cursor: pointer;
       transition: background 0.3s ease;
       outline: none;
-      /* Agar tombol tidak melebar, bisa diatur sesuai kebutuhan (misalnya width: auto atau 100%) */
-      align-self: flex-start; 
     }
     
     .button:hover {
