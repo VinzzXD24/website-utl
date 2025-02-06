@@ -105,17 +105,16 @@
       color: var(--text-color);
       font-size: 1rem;
       cursor: pointer;
-      transition: background 0.3s ease, transform 0.3s ease;
+      transition: background 0.3s ease; /* Hanya transisi background */
     }
 
     .button:hover {
       background: var(--button-hover-color);
-      transform: translateY(-50%) scale(1.05);
+      /* Tidak ada scaling sehingga tombol tidak membesar */
     }
 
     .button:active {
-      top: 50%; /* Maintain position on click */
-      transform: translateY(-50%) scale(1); /* Keep scale unchanged */
+      transform: translateY(-50%);
     }
 
     .download-section {
