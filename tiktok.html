@@ -18,13 +18,13 @@
       --shadow-color: rgba(0, 0, 0, 0.3);
       --font-family: 'Poppins', sans-serif;
     }
-
+    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
+    
     body {
       font-family: var(--font-family);
       background: var(--background-color);
@@ -34,7 +34,7 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-
+    
     header {
       padding: 1.5rem;
       text-align: center;
@@ -42,27 +42,27 @@
       box-shadow: 0 4px 15px var(--shadow-color);
       margin-bottom: 2rem;
     }
-
+    
     .header-content {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 1rem;
     }
-
+    
     .icon {
       font-size: 2.2rem;
       color: #00f1a1; /* Warna hijau khas TikTok */
       animation: pulse 2s infinite;
     }
-
+    
     h2 {
       font-size: 1.8rem;
       font-weight: 600;
       letter-spacing: 0.5px;
       color: var(--text-color);
     }
-
+    
     .container {
       flex: 1;
       max-width: 800px;
@@ -70,12 +70,15 @@
       padding: 2rem;
       width: 90%;
     }
-
+    
+    /* Mengatur input-group sebagai kolom */
     .input-group {
       margin: 2rem 0;
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
-
+    
     .input-field {
       width: 100%;
       padding: 1.2rem;
@@ -85,21 +88,16 @@
       border-radius: 8px;
       font-size: 1rem;
       transition: all 0.3s ease;
-      padding-right: 140px;
     }
-
+    
     .input-field:focus {
       border-color: var(--primary-color);
-      box-shadow: 0 0 10px rgba(255, 59, 48, 0.3);
+      box-shadow: 0 0 10px rgba(255,59,48,0.3);
       outline: none;
     }
-
-    /* Tombol Download tanpa scaling */
+    
+    /* Tombol Download ditempatkan di bawah input, tanpa posisi absolut */
     .button {
-      position: absolute;
-      right: 5px;
-      top: 50%;
-      transform: translateY(-50%);
       padding: 0.8rem 1.5rem;
       background: var(--primary-color);
       border: none;
@@ -107,18 +105,16 @@
       color: var(--text-color);
       font-size: 1rem;
       cursor: pointer;
-      transition: background 0.3s ease; /* Hanya transisi background */
+      transition: background 0.3s ease;
+      outline: none;
+      /* Agar tombol tidak melebar, bisa diatur sesuai kebutuhan (misalnya width: auto atau 100%) */
+      align-self: flex-start; 
     }
-
+    
     .button:hover {
       background: var(--button-hover-color);
-      transform: translateY(-50%); /* Tidak ada scaling */
     }
-
-    .button:active {
-      transform: translateY(-50%); /* Tetap sama saat diklik */
-    }
-
+    
     .download-section {
       margin-top: 2rem;
       background: var(--input-bg-color);
@@ -127,7 +123,7 @@
       display: none;
       animation: fadeIn 0.5s ease;
     }
-
+    
     .download-link {
       display: flex;
       align-items: center;
@@ -136,16 +132,16 @@
       text-decoration: none;
       transition: transform 0.3s ease;
     }
-
+    
     .download-link:hover {
       transform: translateX(10px);
     }
-
+    
     .download-icon {
       font-size: 1.5rem;
       color: var(--highlight-color);
     }
-
+    
     .warning {
       margin-top: 2rem;
       padding: 1.5rem;
@@ -153,13 +149,13 @@
       border-left: 4px solid var(--primary-color);
       border-radius: 6px;
     }
-
+    
     .warning p {
       line-height: 1.6;
       font-size: 0.9rem;
       color: #cccccc;
     }
-
+    
     .copyright-warning {
       margin-top: 2rem;
       padding: 1.5rem;
@@ -167,13 +163,13 @@
       border-left: 4px solid #ff3b30;
       border-radius: 6px;
     }
-
+    
     .copyright-warning p {
       font-size: 0.9rem;
       color: #cccccc;
       line-height: 1.6;
     }
-
+    
     .footer {
       text-align: center;
       padding: 1.5rem;
@@ -181,35 +177,22 @@
       margin-top: auto;
       border-top: 1px solid var(--border-color);
     }
-
+    
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
-
+    
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
+    
     @media (max-width: 768px) {
       .container {
         padding: 1rem;
         width: 95%;
-      }
-      
-      .button {
-        position: relative;
-        width: 100%;
-        margin-top: 1rem;
-        transform: none;
-        right: auto;
-        top: auto;
-      }
-      
-      .input-field {
-        padding-right: 1.2rem;
       }
     }
   </style>
@@ -221,33 +204,27 @@
       <h2>TikTok Downloader</h2>
     </div>
   </header>
-
   <div class="container">
     <div class="input-group">
       <input type="text" class="input-field" id="tiktok-url" placeholder="Masukkan URL TikTok">
       <button class="button" onclick="downloadVideo()">Download</button>
     </div>
-
     <div class="download-section" id="download-section">
       <a href="#" class="download-link" id="download-link">
         <i class="fas fa-download download-icon"></i>
         <span>Download Video</span>
       </a>
     </div>
-
     <div class="warning">
       <p>Pastikan URL TikTok yang dimasukkan valid dan tersedia.</p>
     </div>
-
     <div class="copyright-warning">
       <p>Harap dicatat bahwa pengunduhan video TikTok tanpa izin dapat melanggar hak cipta dan ketentuan penggunaan TikTok. Pastikan Anda hanya mengunduh video yang tidak dilindungi hak cipta atau video yang Anda miliki haknya.</p>
     </div>
   </div>
-
   <footer class="footer">
     <p>&copy; 2025 TikTok Downloader | All Rights Reserved</p>
   </footer>
-
   <script>
     function downloadVideo() {
       const url = document.getElementById('tiktok-url').value;
