@@ -71,7 +71,7 @@
             margin-top: 20px;
         }
 
-        .result img {
+        .media-preview {
             width: 100%;
             max-width: 400px;
             border-radius: 10px;
@@ -120,9 +120,15 @@
                         resultDiv.innerHTML = "<h3>Hasil:</h3>";
 
                         data.data.forEach(item => {
-                            let fileType = item.url.includes(".mp4") ? "Video" : "Foto";
+                            let isVideo = item.url.includes(".mp4") || item.type === "video";
+                            let mediaElement = isVideo 
+                                ? `<video class="media-preview" controls><source src="${item.url}" type="video/mp4">Browser tidak mendukung video.</video>`
+                                : `<img class="media-preview" src="${item.url}" alt="Thumbnail">`;
+
+                            let fileType = isVideo ? "Video" : "Foto";
+
                             resultDiv.innerHTML += `
-                                <img src="${item.thumbnail}" alt="Thumbnail">
+                                ${mediaElement}
                                 <a href="${item.url}" class="download-btn" download>Download ${fileType}</a>
                             `;
                         });
