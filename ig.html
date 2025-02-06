@@ -179,7 +179,7 @@
 
   <div class="download-section" id="downloadSection">
     <img src="" id="thumbnail" class="thumbnail" alt="Thumbnail" />
-    <button class="button" id="downloadButton">Download</button>
+    <button class="button" id="downloadButton" onclick="downloadFile()">Download</button>
   </div>
 </div>
 
@@ -187,7 +187,7 @@
   document.getElementById("downloadBtn").addEventListener("click", function() {
     const url = document.getElementById("urlInput").value.trim();
 
-    // Regex untuk memvalidasi URL Instagram
+    // Validasi URL Instagram
     const regexStandard = /^https:\/\/www\.instagram\.com\/p\/[a-zA-Z0-9-_]+\/$/;
     const regexWithParams = /^https:\/\/www\.instagram\.com\/p\/[a-zA-Z0-9-_]+\/\?([a-zA-Z0-9-_]+=[a-zA-Z0-9-_]+&?)*/;
 
@@ -200,29 +200,37 @@
     document.getElementById("missionCompleted").style.display = "none";
     document.getElementById("downloadSection").style.display = "none";
 
-    setTimeout(function() {
-      // Simulasi pemrosesan
-      document.getElementById("loading").style.display = "none";
-      document.getElementById("missionCompleted").style.display = "block";
+    const apiUrl = `https://api.siputzx.my.id/api/d/igdl?url=${encodeURIComponent(url)}`;
 
-      // Simulasi thumbnail dan URL download
-      const thumbnailUrl = "https://via.placeholder.com/300"; // Gantilah ini dengan gambar thumbnail yang sesuai
-      document.getElementById("thumbnail").src = thumbnailUrl;
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        if (data.status) {
+          document.getElementById("loading").style.display = "none";
+          document.getElementById("missionCompleted").style.display = "block";
+          
+          const thumbnailUrl = data.data[0].thumbnail;
+          const downloadUrl = data.data[0].url;
 
-      // Tambahkan link download di sini
-      const downloadUrl = "https://via.placeholder.com/300"; // Gantilah dengan URL file yang sesuai
-      document.getElementById("downloadButton").setAttribute("href", downloadUrl);
-      document.getElementById("downloadSection").style.display = "block";
-    }, 2000); // Simulasi delay
+          document.getElementById("thumbnail").src = thumbnailUrl;
+          document.getElementById("downloadButton").setAttribute("href", downloadUrl);
+          document.getElementById("downloadSection").style.display = "block";
+        } else {
+          alert("Gagal mengambil data. Pastikan URL Instagram benar.");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Terjadi kesalahan, coba lagi.");
+      });
   });
 
-  document.getElementById("downloadButton").addEventListener("click", function(e) {
-    e.preventDefault(); // Prevents default behavior to handle the download logic here
+  function downloadFile() {
     const downloadUrl = document.getElementById("downloadButton").getAttribute("href");
     if (downloadUrl) {
-      window.location.href = downloadUrl; // This triggers the download
+      window.location.href = downloadUrl;
     }
-  });
+  }
 </script>
 
 </body>
