@@ -1,5 +1,8 @@
-<html>
+<!DOCTYPE html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Netcyzen</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
@@ -14,33 +17,44 @@
     </style>
 </head>
 <body class="bg-gray-900 text-gray-200">
-    <header class="flex justify-between items-center p-6">
-        <div class="flex items-center">
+    <!-- Header -->
+    <header class="container mx-auto flex flex-col md:flex-row justify-between items-center p-6">
+        <div class="flex items-center mb-4 md:mb-0">
             <span class="text-2xl font-bold text-red-600 ml-2">Netcyzen</span>
         </div>
         <div class="flex items-center space-x-4">
-            <a class="text-gray-400 hover:text-gray-200" href="live-chat.html">Live Chat <i class="fas fa-external-link-alt"></i></a>
+            <a class="text-gray-400 hover:text-gray-200" href="live-chat.html">
+                Live Chat <i class="fas fa-external-link-alt"></i>
+            </a>
         </div>
     </header>
-    <main class="text-center p-6">
-        <div class="p-4 rounded-lg mb-6">
-            <span class="text-lg">🎉 Netcyzen-R1 is now live and open source, rivaling OpenAI's Model o1. Available on web, app, and API. Click for details.</span>
+
+    <!-- Main Content -->
+    <main class="container mx-auto text-center p-6">
+        <div class="p-4 rounded-lg mb-6 bg-gray-800">
+            <span class="text-lg">
+                🎉 Netcyzen-R1 is now live and open source, rivaling OpenAI's Model o1. Available on web, app, and API. Click for details.
+            </span>
         </div>
         <p class="text-2xl text-gray-400 mb-8">Into the unknown</p>
         <div class="space-y-6">
-            <a href="https://chat.netcyzen.software" class="block bg-gray-800 red-shadow rounded-lg p-6">
+            <a href="https://chat.netcyzen.software" class="block bg-gray-800 red-shadow rounded-lg p-6 hover:scale-105 transition-transform">
                 <h2 class="text-2xl font-bold text-red-600 mb-2">Start Now</h2>
                 <p class="text-gray-400">Free access to Netcyzen-V3. Experience the intelligent model.</p>
             </a>
-            <a href="coming-soon.html" class="block bg-gray-800 red-shadow rounded-lg p-6">
+            <a href="coming-soon.html" class="block bg-gray-800 red-shadow rounded-lg p-6 hover:scale-105 transition-transform">
                 <h2 class="text-2xl font-bold text-red-600 mb-2">Get Netcyzen App</h2>
                 <p class="text-gray-400">Chat on the go with Netcyzen-V3. Your free all-in-one AI tool.</p>
             </a>
         </div>
     </main>
-    <section class="text-center p-6">
+
+    <!-- Section Informasi -->
+    <section class="container mx-auto text-center p-6">
         <h2 class="text-3xl font-bold text-gray-200 mb-4">Netcyzen-V3 Capabilities</h2>
-        <p class="text-gray-400">Netcyzen-V3 achieves a significant breakthrough in inference speed over previous models. It tops the leaderboard among open-source models and rivals the most advanced closed-source models globally.</p>
+        <p class="text-gray-400">
+            Netcyzen-V3 achieves a significant breakthrough in inference speed over previous models. It tops the leaderboard among open-source models and rivals the most advanced closed-source models globally.
+        </p>
     </section>
 </body>
 </html>
