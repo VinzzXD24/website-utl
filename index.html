@@ -11,22 +11,40 @@
     body {
       font-family: 'Inter', sans-serif;
     }
-    /* Shadow standar merah (dipakai untuk Get Netcyzen App) */
-    .red-shadow {
-      box-shadow: 0 4px 6px rgba(255, 0, 0, 0.1), 0 2px 4px rgba(255, 0, 0, 0.06);
+    /* Animasi untuk efek RGB pada box-shadow */
+    @keyframes rgbShadowAnimation {
+      0% {
+        box-shadow: 
+          0 4px 6px rgba(255, 0, 0, 0.4),
+          0 4px 8px rgba(255, 102, 102, 0.4),
+          0 4px 10px rgba(204, 0, 0, 0.4),
+          0 4px 12px rgba(139, 0, 0, 0.4),
+          0 4px 14px rgba(0, 0, 0, 0.4);
+      }
+      50% {
+        box-shadow: 
+          0 4px 6px rgba(139, 0, 0, 0.4),
+          0 4px 8px rgba(204, 0, 0, 0.4),
+          0 4px 10px rgba(255, 102, 102, 0.4),
+          0 4px 12px rgba(255, 0, 0, 0.4),
+          0 4px 14px rgba(0, 0, 0, 0.4);
+      }
+      100% {
+        box-shadow: 
+          0 4px 6px rgba(255, 0, 0, 0.4),
+          0 4px 8px rgba(255, 102, 102, 0.4),
+          0 4px 10px rgba(204, 0, 0, 0.4),
+          0 4px 12px rgba(139, 0, 0, 0.4),
+          0 4px 14px rgba(0, 0, 0, 0.4);
+      }
     }
-    /* Shadow khusus untuk Start Now dengan beberapa lapisan warna merah dan hitam */
-    .start-shadow {
-      box-shadow: 
-        0 4px 6px rgba(255, 0, 0, 0.3),   /* merah terang */
-        0 2px 4px rgba(200, 0, 0, 0.3),   /* merah agak gelap */
-        0 1px 2px rgba(139, 0, 0, 0.3),   /* merah gelap */
-        0 0 1px rgba(0, 0, 0, 0.5);       /* hitam */
+    .rgb-shadow {
+      animation: rgbShadowAnimation 3s infinite;
     }
   </style>
 </head>
 <body class="bg-gray-900 text-gray-200">
-  <!-- Header: Netcyzen di kiri dan Live Chat di kanan -->
+  <!-- Header -->
   <header class="container mx-auto flex justify-between items-center p-6">
     <div class="flex items-center">
       <span class="text-2xl font-bold text-red-600 ml-2">Netcyzen</span>
@@ -38,33 +56,28 @@
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Konten Utama -->
   <main class="container mx-auto text-center p-6">
-    <!-- Pengumuman dengan background gradasi merah -->
-    <div class="p-4 rounded-lg mb-6 bg-gradient-to-r from-red-500 to-red-700">
-      <span class="text-lg">
-        🎉 Netcyzen-R1 kini telah aktif dan open source, menyaingi Model o1 OpenAI. Tersedia di web, aplikasi, dan API. Klik untuk detail.
-      </span>
-    </div>
-    <p class="text-2xl text-gray-400 mb-8">Menjelajah ke yang tidak diketahui</p>
+    <p class="text-2xl text-gray-400 mb-8">Menuju yang belum dikenal</p>
     <div class="space-y-6">
-      <!-- Start Now dengan custom shadow merah -->
-      <a href="https://chat.netcyzen.software" class="block bg-gray-800 start-shadow rounded-lg p-6 hover:scale-105 transition-transform">
+      <!-- Tombol "Start Now" dengan animasi rgb-shadow -->
+      <a href="https://chat.netcyzen.software" class="block bg-gray-800 rgb-shadow rounded-lg p-6 hover:scale-105 transition-transform">
         <h2 class="text-2xl font-bold text-red-600 mb-2">Start Now</h2>
-        <p class="text-gray-400">Akses gratis ke Netcyzen-V3. Rasakan kecerdasan model terbaru.</p>
+        <p class="text-gray-400">Akses gratis ke Netcyzen-V3. Rasakan kecerdasan model ini.</p>
       </a>
-      <a href="coming-soon.html" class="block bg-gray-800 red-shadow rounded-lg p-6 hover:scale-105 transition-transform">
+      <!-- Tombol "Get Netcyzen App" dengan animasi rgb-shadow -->
+      <a href="coming-soon.html" class="block bg-gray-800 rgb-shadow rounded-lg p-6 hover:scale-105 transition-transform">
         <h2 class="text-2xl font-bold text-red-600 mb-2">Get Netcyzen App</h2>
-        <p class="text-gray-400">Chat di mana saja dengan Netcyzen-V3. Alat AI serba guna secara gratis.</p>
+        <p class="text-gray-400">Chat di mana saja dengan Netcyzen-V3. Alat AI serbaguna gratis untuk Anda.</p>
       </a>
     </div>
   </main>
 
-  <!-- Section Informasi -->
+  <!-- Section Kemampuan -->
   <section class="container mx-auto text-center p-6">
     <h2 class="text-3xl font-bold text-gray-200 mb-4">Kemampuan Netcyzen-V3</h2>
     <p class="text-gray-400">
-      Netcyzen-V3 mencapai terobosan signifikan dalam kecepatan inferensi dibandingkan model sebelumnya. Ia memimpin peringkat di antara model open-source dan menyaingi model-model tertutup paling canggih di dunia.
+      Netcyzen-V3 mencapai terobosan signifikan dalam kecepatan inferensi dibandingkan model sebelumnya. Model ini menempati peringkat teratas di antara model open source dan menyaingi model-model tertutup paling canggih di dunia.
     </p>
   </section>
 </body>
