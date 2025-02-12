@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QR Code Generator with Logo and Name</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <!-- Sertakan pustaka QRCode.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    /* Reset dan styling dasar */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f4f7f9;
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 15px;
+    }
+    .buttons {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .buttons button {
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .buttons button:hover {
+      background-color: #0056b3;
+    }
+    /* Ubah background container QR Code menjadi putih senada */
+    .qr-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      min-height: 370px;
+    }
+    canvas {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>QR Code Generator</h1>
+    <!-- Input Nama QR Code (wajib) -->
+    <div class="form-group">
+      <label for="qrName">Nama QR Code:</label>
+      <input type="text" id="qrName" placeholder="Masukkan nama QR Code" required>
+    </div>
+    <!-- Input Teks/URL -->
+    <div class="form-group">
+      <label for="qrText">Teks/URL:</label>
+      <input type="text" id="qrText" placeholder="Masukkan teks atau URL">
+    </div>
+    <!-- Input Logo (opsional) -->
+    <div class="form-group">
+      <label for="logoInput">Logo (opsional):</label>
+      <input type="file" id="logoInput" accept="image/*">
+    </div>
+    <div class="buttons">
+      <button id="generateBtn">Buat QR Code</button>
+      <button id="downloadBtn" style="display:none;">Download QR Code</button>
+    </div>
+    <div class="qr-container">
+      <!-- Canvas untuk menampilkan hasil akhir QR Code -->
+      <canvas id="qrCanvas"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const generateBtn = document.getElementById('generateBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const qrCanvas = document.getElementById('qrCanvas');
+
+    generateBtn.addEventListener('click', generateQRCode);
+    downloadBtn.addEventListener('click', downloadQRCode);
+
+    function generateQRCode() {
+      const qrName = document.getElementById('qrName').value.trim();
+      const qrText = document.getElementById('qrText').value.trim();
+
+      if (qrName === "") {
+        alert("Nama QR Code wajib diisi.");
+        return;
+      }
+      if (qrText === "") {
+        alert("Teks/URL wajib diisi.");
+        return;
+      }
+
+      // Sembunyikan tombol download sampai proses selesai
+      downloadBtn.style.display = 'none';
+
+      // Atur ukuran QR Code dan tinggi area nama
+      const qrSize = 300;       // Ukuran QR Code
+      const nameArea = 50;      // Tinggi area untuk nama di atas QR Code
+      const canvasWidth = qrSize;
+      const canvasHeight = qrSize + nameArea;
+
+      // Buat elemen container sementara untuk generate QR Code dengan pustaka QRCode.js
+      const tempContainer = document.createElement('div');
+      new QRCode(tempContainer, {
+        text: qrText,
+        width: qrSize,
+        height: qrSize,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+
+      // Tunggu sejenak agar QR Code selesai dibuat (umumnya prosesnya sinkron)
+      setTimeout(() => {
+        const generatedCanvas = tempContainer.querySelector('canvas');
+        if (!generatedCanvas) {
+          alert("Gagal membuat QR Code. Silakan coba lagi.");
+          return;
+        }
+
+        // Set dimensi canvas utama untuk hasil akhir
+        qrCanvas.width = canvasWidth;
+        qrCanvas.height = canvasHeight;
+        const ctx = qrCanvas.getContext('2d');
+
+        // Gambar background putih untuk keseluruhan canvas
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+        // Gambar nama QR Code di atas, dengan teks yang terpusat secara horizontal dan vertikal
+        ctx.fillStyle = "#333333";
+        ctx.font = "bold 20px Roboto, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(qrName, canvasWidth / 2, nameArea / 2);
+
+        // Gambar QR Code (dari canvas sementara) ke canvas utama, dengan offset pada sumbu y agar tidak menimpa nama
+        ctx.drawImage(generatedCanvas, 0, nameArea);
+
+        // Proses penggambaran logo jika diupload
+        const logoInput = document.getElementById('logoInput');
+        if (logoInput.files && logoInput.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const logoImg = new Image();
+            logoImg.onload = function() {
+              // Tentukan ukuran logo (20% dari lebar QR Code)
+              const logoSize = qrSize * 0.2;
+              const x = (qrSize - logoSize) / 2;
+              // Karena QR Code digambar mulai dari koordinat y = nameArea, tambahkan offset nameArea
+              const y = nameArea + (qrSize - logoSize) / 2;
+              ctx.save();
+              // Buat clipping area berbentuk lingkaran agar logo tampil bulat
+              ctx.beginPath();
+              ctx.arc(qrSize / 2, nameArea + qrSize / 2, logoSize / 2, 0, Math.PI * 2);
+              ctx.closePath();
+              ctx.clip();
+              ctx.drawImage(logoImg, x, y, logoSize, logoSize);
+              ctx.restore();
+              // Tampilkan tombol download setelah proses selesai
+              downloadBtn.style.display = 'inline-block';
+            };
+            logoImg.src = e.target.result;
+          };
+          reader.readAsDataURL(logoInput.files[0]);
+        } else {
+          // Jika tidak ada logo, langsung tampilkan tombol download
+          downloadBtn.style.display = 'inline-block';
+        }
+      }, 500);
+    }
+
+    function downloadQRCode() {
+      // Konversi canvas menjadi data URL dan buat elemen <a> untuk mendownload sebagai PNG
+      const imageData = qrCanvas.toDataURL("image/png");
+      const a = document.createElement('a');
+      a.href = imageData;
+      a.download = "qr_code.png";
+      a.click();
+    }
+  </script>
+</body>
+</html>
